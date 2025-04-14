@@ -8,7 +8,7 @@ function App() {
       <Navbar />
       <div className="flex">
         <LeftSidebar />
-        <section>main content</section>
+        <section className="bg-light-700 w-full">main content</section>
       </div>
     </>
   );
