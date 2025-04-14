@@ -3,7 +3,8 @@ import React from "react";
 
 const LeftSidebar = () => {
   return (
-    <div className="w-[300px] flex h-screen flex-col justify-between base-bold text-light-600 bg-light-900 p-8 ">
+    <div className="w-[300px] border-r border-light-700 flex h-screen flex-col justify-between base-bold text-light-600 bg-light-900 p-8 ">
+      <img src="/icons/logo-dark.svg" alt="logo" />
       {/* board names */}
       <div>
         <p>ALL BOARDS (3)</p>
