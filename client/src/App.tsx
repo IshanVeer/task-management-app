@@ -1,9 +1,15 @@
 import "./App.css";
+import LeftSidebar from "./components/shared/LeftSidebar";
+import Navbar from "./components/shared/Navbar";
 
 function App() {
   return (
     <>
-      <div className="text-light-700 h1-bold">hello world</div>
+      <Navbar />
+      <div className="flex">
+        <LeftSidebar />
+        <section>main content</section>
+      </div>
     </>
   );
 }

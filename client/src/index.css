@@ -1,6 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
 @theme {
+  --font-family-primary: "Plus Jakarta Sans", sans-serif;
   --color-primary-500: #635fc7;
   --color-primary-700: #a8a4ff;
   --color-red-500: #ea5555;
@@ -13,6 +15,8 @@
   --color-light-800: #f4f7fd;
   --color-light-700: #e4ebfa;
   --color-light-600: #828fa3;
+  --color-button-800: rgba(99, 95, 199, 0.1);
+  --color-button-700: rgba(99, 95, 199, 0.25);
 }
 @layer utilities {
   .h1-bold {
@@ -42,8 +46,17 @@
   .background-light900_dark400 {
     @apply bg-light-900 dark:bg-dark-400;
   }
+  .button-primary {
+    @apply bg-primary-500 text-light-900 hover:bg-primary-700;
+  }
+  .button-secondary {
+    @apply bg-button-800 text-primary-500  hover:bg-button-700 dark:bg-light-900 dark:hover:text-primary-700;
+  }
+  .button-destructive {
+    @apply bg-red-500 text-light-900 hover:bg-red-700;
+  }
 }
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
