@@ -1,5 +1,6 @@
 import { data } from "@/constants";
 import React from "react";
+import { Switch } from "../ui/switch";
 
 const LeftSidebar = () => {
   return (
@@ -7,10 +8,13 @@ const LeftSidebar = () => {
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
-        <ul className="my-8 flex flex-col gap-6">
+        <ul className="my-8 flex flex-col ">
           {data.boards.map((board) => (
-            <li className="flex items-center gap-4" key={board.name}>
-              <img src="/icons/icon-board.svg" alt="board" />
+            <li
+              className="flex py-4 items-center gap-4 cursor-pointer hover:rounded-r-3xl -ml-8 px-8 hover:bg-button-800 hover:text-primary-500"
+              key={board.name}
+            >
+              <img className="" src="/icons/icon-board.svg" alt="board" />
               {board.name}
             </li>
           ))}
@@ -20,7 +24,7 @@ const LeftSidebar = () => {
       <div>
         <div className="flex mb-6 items-center justify-center gap-6 bg-light-800 px-2 py-3 rounded-sm ">
           <img src="/icons/icon-light-theme.svg" alt="light-theme" />
-          switch
+          <Switch />
           <img src="/icons/icon-dark-theme.svg" alt="dark-theme" />
         </div>
         <button className="flex cursor-pointer items-center gap-4">
