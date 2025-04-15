@@ -5,11 +5,12 @@ import Navbar from "./components/shared/Navbar";
 function App() {
   return (
     <>
-      <div className="flex">
-        <LeftSidebar />
-        <div className="flex flex-col w-full">
-          <Navbar />
-          <section className="bg-light-800 w-full h-screen">
+      <div className=" bg-light-800">
+        <Navbar />
+
+        <div className="flex">
+          <LeftSidebar />
+          <section className="flex-1 border-l border-light-700">
             main content
           </section>
         </div>
