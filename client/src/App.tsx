@@ -7,6 +7,7 @@ import Board from "./components/shared/Board";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
+  const [showSidebar, setShowSidebar] = useState(true);
   return (
     <>
       <ThemeProvider>
@@ -14,10 +15,25 @@ function App() {
           <Navbar selectedBoard={selectedBoard} />
 
           <div className="flex">
-            <LeftSidebar
-              selectedBoard={selectedBoard}
-              setSelectedBoard={setSelectedBoard}
-            />
+            {showSidebar ? (
+              <LeftSidebar
+                selectedBoard={selectedBoard}
+                setSelectedBoard={setSelectedBoard}
+                setShowSidebar={setShowSidebar}
+              />
+            ) : (
+              <div className="bg-primary-500 px-6 py-6 rounded-r-[50%] fixed bottom-12 self-start ">
+                <button
+                  className="cursor-pointer"
+                  onClick={() => setShowSidebar(true)}
+                >
+                  <img
+                    src="/icons/icon-hide-sidebar-hidden.svg"
+                    alt="show-sidebar"
+                  />
+                </button>
+              </div>
+            )}
             <section className="flex-1 h-screen border-l border-light">
               <Board selectedBoard={selectedBoard} />
             </section>

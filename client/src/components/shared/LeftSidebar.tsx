@@ -1,19 +1,20 @@
 import { data } from "@/constants";
-import React from "react";
 
 import Theme from "./Theme";
 
 interface SetSelectedBoardTypes {
   setSelectedBoard: (board: string) => void;
   selectedBoard: string;
+  setShowSidebar: (show: boolean) => void;
 }
 
 const LeftSidebar = ({
   setSelectedBoard,
   selectedBoard,
+  setShowSidebar,
 }: SetSelectedBoardTypes) => {
   return (
-    <div className=" w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
+    <div className="  w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
@@ -50,7 +51,10 @@ const LeftSidebar = ({
       {/* controls */}
       <div>
         <Theme />
-        <button className="flex cursor-pointer items-center gap-4">
+        <button
+          onClick={() => setShowSidebar(false)}
+          className="flex cursor-pointer items-center gap-4"
+        >
           <img
             src="../../../public/icons/icon-hide-sidebar.svg"
             alt="hide-sidebar"
