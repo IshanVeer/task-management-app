@@ -13,7 +13,10 @@ function App() {
           <Navbar selectedBoard={selectedBoard} />
 
           <div className="flex">
-            <LeftSidebar setSelectedBoard={setSelectedBoard} />
+            <LeftSidebar
+              selectedBoard={selectedBoard}
+              setSelectedBoard={setSelectedBoard}
+            />
             <section className="flex-1 border-l border-light">
               main content
             </section>

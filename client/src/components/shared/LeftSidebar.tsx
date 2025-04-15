@@ -5,22 +5,39 @@ import Theme from "./Theme";
 
 interface SetSelectedBoardTypes {
   setSelectedBoard: (board: string) => void;
+  selectedBoard: string;
 }
 
-const LeftSidebar = ({ setSelectedBoard }: SetSelectedBoardTypes) => {
+const LeftSidebar = ({
+  setSelectedBoard,
+  selectedBoard,
+}: SetSelectedBoardTypes) => {
   return (
     <div className=" w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
-        <ul className="my-8 flex flex-col ">
+        <ul className="my-8 flex flex-col gap-1 ">
           {data.boards.map((board) => (
             <li
-              className="flex py-4 items-center gap-4 cursor-pointer hover:rounded-r-3xl -ml-8 px-8 hover:bg-button-800 hover:text-primary-500"
+              className={`${
+                selectedBoard === board.name
+                  ? "bg-primary-500 text-light-900 rounded-r-3xl"
+                  : "hover:rounded-r-3xl hover:bg-button-800 hover:text-primary-500"
+              } flex py-4 items-center rounded-r-3xl gap-4 cursor-pointer ease-in-out l transition duration-150 -ml-8 px-8  `}
               key={board.name}
               onClick={() => setSelectedBoard(board.name)}
             >
-              <img className="" src="/icons/icon-board.svg" alt="board" />
+              {selectedBoard === board.name ? (
+                <img
+                  className=""
+                  src="/icons/icon-board-active.svg"
+                  alt="board"
+                />
+              ) : (
+                <img className="" src="/icons/icon-board.svg" alt="board" />
+              )}
+
               {board.name}
             </li>
           ))}
