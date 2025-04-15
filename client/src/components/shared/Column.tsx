@@ -21,7 +21,7 @@ interface Columnprops {
 const Column = ({ name, taskQty, tasks }: Columnprops) => {
   const randomColor = generateRandomColor();
   return (
-    <div className="w-full ">
+    <div className="w-[280px] flex-shrink-0 ">
       <div className="flex items-center gap-2">
         <div
           className="w-3 h-3 rounded-[100%]"

@@ -34,7 +34,7 @@ function App() {
                 </button>
               </div>
             )}
-            <section className="flex-1 h-screen border-l border-light">
+            <section className="flex-1 overflow-x-auto w-full  border-l border-light">
               <Board selectedBoard={selectedBoard} />
             </section>
           </div>

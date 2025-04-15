@@ -13,7 +13,7 @@ const Board = ({ selectedBoard }: Boardprops) => {
   );
   console.log(selectedBoardData, " selected board data");
   return (
-    <div className="flex p-4 gap-6">
+    <div className="flex p-6 gap-6">
       {selectedBoardData?.columns?.length ? (
         selectedBoardData?.columns.map((column) => (
           <Column
