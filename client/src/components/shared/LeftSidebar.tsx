@@ -17,7 +17,7 @@ const LeftSidebar = ({
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
-        <ul className="my-8 flex flex-col gap-1 ">
+        <ul className="mt-8 flex flex-col gap-1 ">
           {data.boards.map((board) => (
             <li
               className={`${
@@ -42,6 +42,10 @@ const LeftSidebar = ({
             </li>
           ))}
         </ul>
+        <button className="flex gap-4 my-4 cursor-pointer text-primary-500 items-center">
+          <img src="/icons/icon-board-button.svg" alt="icon button" />
+          <p>+ Create New Board</p>
+        </button>
       </div>
       {/* controls */}
       <div>

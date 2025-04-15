@@ -3,6 +3,7 @@ import "./App.css";
 import LeftSidebar from "./components/shared/LeftSidebar";
 import Navbar from "./components/shared/Navbar";
 import ThemeProvider from "./context/ThemeProvider";
+import Board from "./components/shared/Board";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
@@ -17,8 +18,8 @@ function App() {
               selectedBoard={selectedBoard}
               setSelectedBoard={setSelectedBoard}
             />
-            <section className="flex-1 border-l border-light">
-              main content
+            <section className="flex-1 h-screen border-l border-light">
+              <Board selectedBoard={selectedBoard} />
             </section>
           </div>
         </div>
