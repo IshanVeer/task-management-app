@@ -12,7 +12,10 @@ function App() {
     <>
       <ThemeProvider>
         <div className=" background-light800_dark300">
-          <Navbar selectedBoard={selectedBoard} />
+          <Navbar
+            setSelectedBoard={setSelectedBoard}
+            selectedBoard={selectedBoard}
+          />
 
           <div className="flex">
             {showSidebar ? (
