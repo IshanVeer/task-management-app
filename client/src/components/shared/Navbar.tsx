@@ -1,7 +1,11 @@
 import Button from "../ui/Button";
 import { useTheme } from "@/context/ThemeProvider";
 
-const Navbar = () => {
+interface Navbarprops {
+  selectedBoard: string;
+}
+
+const Navbar = ({ selectedBoard }: Navbarprops) => {
   const { mode } = useTheme();
   return (
     <div className="flex background-light900_dark400 justify-between items-center">
@@ -15,7 +19,7 @@ const Navbar = () => {
       </div>
       {/* container right */}
       <div className="border-l border-b px-8 py-6 flex-1  items-center flex  justify-between border-light">
-        <h1 className="h1-bold">Board Title</h1>
+        <h1 className="h1-bold">{selectedBoard}</h1>
         <div className="flex items-center gap-4">
           <Button label="+ Add New Task" />
           <button className="cursor-pointer">
