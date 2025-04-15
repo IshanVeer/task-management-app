@@ -7,12 +7,12 @@ function App() {
   return (
     <>
       <ThemeProvider>
-        <div className=" bg-light-800">
+        <div className=" background-light800_dark300">
           <Navbar />
 
           <div className="flex">
             <LeftSidebar />
-            <section className="flex-1 border-l border-light-700">
+            <section className="flex-1 border-l border-light">
               main content
             </section>
           </div>

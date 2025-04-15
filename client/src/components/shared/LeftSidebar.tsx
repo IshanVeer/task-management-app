@@ -1,10 +1,11 @@
 import { data } from "@/constants";
 import React from "react";
-import { Switch } from "../ui/switch";
+
+import Theme from "./Theme";
 
 const LeftSidebar = () => {
   return (
-    <div className=" w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  bg-light-900 ">
+    <div className=" w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
@@ -22,11 +23,7 @@ const LeftSidebar = () => {
       </div>
       {/* controls */}
       <div>
-        <div className="flex mb-6 items-center justify-center gap-6 bg-light-800 px-2 py-3 rounded-sm ">
-          <img src="/icons/icon-light-theme.svg" alt="light-theme" />
-          <Switch />
-          <img src="/icons/icon-dark-theme.svg" alt="dark-theme" />
-        </div>
+        <Theme />
         <button className="flex cursor-pointer items-center gap-4">
           <img
             src="../../../public/icons/icon-hide-sidebar.svg"
