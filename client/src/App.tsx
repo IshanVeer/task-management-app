@@ -4,6 +4,7 @@ import LeftSidebar from "./components/shared/LeftSidebar";
 import Navbar from "./components/shared/Navbar";
 import ThemeProvider from "./context/ThemeProvider";
 import Board from "./components/shared/Board";
+import Modal from "./components/ui/Modal";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
@@ -11,6 +12,7 @@ function App() {
   return (
     <>
       <ThemeProvider>
+        <Modal />
         <div className=" background-light800_dark300">
           <Navbar
             setSelectedBoard={setSelectedBoard}
