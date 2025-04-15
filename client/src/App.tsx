@@ -22,15 +22,12 @@ function App() {
                 setShowSidebar={setShowSidebar}
               />
             ) : (
-              <div className="bg-primary-500 px-6 py-6 rounded-r-[50%] fixed bottom-12 self-start ">
+              <div className="bg-primary-500 px-6 py-4 rounded-r-[50%] fixed bottom-12 self-start ">
                 <button
                   className="cursor-pointer"
                   onClick={() => setShowSidebar(true)}
                 >
-                  <img
-                    src="/icons/icon-hide-sidebar-hidden.svg"
-                    alt="show-sidebar"
-                  />
+                  <img src="/icons/icon-show-sidebar.svg" alt="show-sidebar" />
                 </button>
               </div>
             )}

@@ -14,7 +14,7 @@ const LeftSidebar = ({
   setShowSidebar,
 }: SetSelectedBoardTypes) => {
   return (
-    <div className="  w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
+    <div className=" max-sm:hidden  w-[300px] flex flex-col justify-between px-8 py-4 h-screen  base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
         <p>ALL BOARDS (3)</p>
