@@ -28,8 +28,11 @@
   .h2-bold {
     @apply text-[18px] font-bold leading-[23px];
   }
+  .h5-bold {
+    @apply text-[12px] font-bold leading-[15px] tracking-[2.4px];
+  }
   .base-bold {
-    @apply text-[15px] font-bold leading-[15px];
+    @apply text-[15px] font-bold leading-[19px];
   }
   .paragraph-medium {
     @apply text-[13px] font-medium leading-[23px];

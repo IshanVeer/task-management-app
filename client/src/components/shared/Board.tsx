@@ -13,10 +13,14 @@ const Board = ({ selectedBoard }: Boardprops) => {
   );
   console.log(selectedBoardData, " selected board data");
   return (
-    <div className="flex items-center p-4 gap-4">
+    <div className="flex p-4 gap-6">
       {selectedBoardData?.columns?.length ? (
         selectedBoardData?.columns.map((column) => (
-          <Column taskQty={column.tasks.length} name={column.name} />
+          <Column
+            tasks={column.tasks}
+            taskQty={column.tasks.length}
+            name={column.name}
+          />
         ))
       ) : (
         <NoColumnPage />
