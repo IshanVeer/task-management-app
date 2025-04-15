@@ -25,6 +25,15 @@ const Board = ({ selectedBoard }: Boardprops) => {
       ) : (
         <NoColumnPage />
       )}
+      <div
+        className="light-gradient mt-7 mb-2 flex flex-col items-center justify-center w-[280px] flex-shrink-0 rounded-sm dark:bg-linear-0 dark:bg-[#353646]
+"
+      >
+        <button className="h1-bold hover:text-dark-400  dark:hover:text-light-700 transition duration-150 cursor-pointer text-light-600">
+          {" "}
+          + New Column
+        </button>
+      </div>
     </div>
   );
 };
