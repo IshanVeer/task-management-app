@@ -1,9 +1,12 @@
-import { data } from "@/constants";
-
 import Theme from "./Theme";
+
+interface BoardsProps {
+  name: string;
+}
 
 interface SetSelectedBoardTypes {
   setSelectedBoard: (board: string) => void;
+  boards: BoardsProps[];
   selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
   openModalHandler: React.Dispatch<
@@ -16,14 +19,15 @@ const LeftSidebar = ({
   selectedBoard,
   setShowSidebar,
   openModalHandler,
+  boards,
 }: SetSelectedBoardTypes) => {
   return (
     <div className=" max-sm:hidden  w-[300px] flex flex-col justify-between px-8 py-4   base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
-        <p>ALL BOARDS ({data.boards.length})</p>
+        <p>ALL BOARDS ({boards.length})</p>
         <ul className="mt-8 flex flex-col gap-1 ">
-          {data.boards.map((board) => (
+          {boards.map((board) => (
             <li
               className={`${
                 selectedBoard === board.name

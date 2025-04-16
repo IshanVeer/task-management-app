@@ -2,6 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   buttonType?: string;
+  type: "button" | "submit" | "reset";
   label: string;
   disabled?: boolean;
   className?: string;
@@ -16,10 +17,11 @@ const Button = ({
   disabled,
   className,
   openModal,
+  type,
 }: ButtonProps) => {
   return (
     <button
-      type="button"
+      type={type}
       disabled={disabled}
       onClick={() => openModal?.("add-task")}
       className={`${className} py-3 px-6 disabled:bg-primary-700 disabled:cursor-not-allowed cursor-pointer transition duration-150 rounded-4xl base-bold ${
