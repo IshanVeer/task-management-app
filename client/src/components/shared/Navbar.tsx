@@ -28,7 +28,7 @@ const Navbar = ({
     (board) => board.name === selectedBoard
   );
   return (
-    <div className="flex background-light900_dark400 justify-between items-center">
+    <div className="flex sticky top-0 left-0 background-light900_dark400 justify-between items-center">
       {/* container left */}
       <div className="pl-8   sm:hidden">
         <img src="/icons/logo-mobile.svg" alt="logo-mobile" />
@@ -46,9 +46,9 @@ const Navbar = ({
         <h1 className="h1-bold max-sm:hidden">{selectedBoard}</h1>
         {/* mobile */}
 
-        <Menubar className="sm:hidden ring-0 focus:ring-0 focus:outline-none focus:border-none border-0 shadow-none focus:bg-light-900 outline-0">
+        <Menubar className="sm:hidden ring-0 focus:ring-0 focus:outline-none background-light900_dark400 focus:border-none border-0 shadow-none focus:bg-light-900 outline-0">
           <MenubarMenu>
-            <MenubarTrigger className="h2-bold border-0 outline-0  flex items-center gap-2">
+            <MenubarTrigger className="h2-bold border-0 bg-transparent outline-0  flex items-center gap-2">
               {selectedBoard} <img src="/icons/icon-chevron-down.svg" alt="" />
             </MenubarTrigger>
             <MenubarContent className="relative sm:hidden  p-6  base-bold text-light-600 top-8 w-[264px]">
@@ -103,9 +103,24 @@ const Navbar = ({
             </button>
           </div>
 
-          <button className="cursor-pointer">
+          {/* <button className="cursor-pointer">
             <img src="/icons/icon-vertical-ellipsis.svg" alt="menu" />
-          </button>
+          </button> */}
+          <Menubar className="focus:ring-0 focus:outline-none focus:border-none border-0 background-light900_dark400 shadow-none outline-0">
+            <MenubarMenu>
+              <MenubarTrigger className="border-0 cursor-pointer bg-transparent bg-da outline-0">
+                <img src="/icons/icon-vertical-ellipsis.svg" alt="menu" />
+              </MenubarTrigger>
+              <MenubarContent className="relative px-2 py-4 shadow-none paragraph-medium text-light-600 border-0 background-light900_dark300 top-3 right-8">
+                <MenubarItem className="cursor-pointer hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit">
+                  Edit Board
+                </MenubarItem>
+                <MenubarItem className="cursor-pointer text-red-500 hover:bg-transparent hover:text-red-500 focus:bg-transparent focus:text-red-500">
+                  Delete Board
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         </div>
       </div>
     </div>

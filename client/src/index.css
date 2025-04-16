@@ -55,6 +55,9 @@
   .background-light900_dark400 {
     @apply bg-light-900 dark:bg-dark-400;
   }
+  .background-light900_dark300 {
+    @apply bg-light-900 dark:bg-dark-300;
+  }
   .light-gradient {
     background: linear-gradient(
       180deg,

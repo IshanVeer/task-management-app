@@ -21,7 +21,7 @@ const LeftSidebar = ({
     <div className=" max-sm:hidden  w-[300px] flex flex-col justify-between px-8 py-4   base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}
       <div>
-        <p>ALL BOARDS (3)</p>
+        <p>ALL BOARDS ({data.boards.length})</p>
         <ul className="mt-8 flex flex-col gap-1 ">
           {data.boards.map((board) => (
             <li
