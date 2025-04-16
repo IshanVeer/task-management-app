@@ -1,34 +1,14 @@
-import React from "react";
+import { BoardProps } from "@/types";
 
 import NoColumnPage from "./NoColumnPage";
 import Column from "./Column";
 
-interface Subtasksprops {
-  title: string;
-  isCompleted: boolean;
-}
-interface Taskprops {
-  title: string;
-  description: string;
-  status: string;
-  subtasks: Subtasksprops[];
-}
-
-interface ColumnProps {
-  name: string;
-  tasks: Taskprops[];
-}
-
-interface BoardColumnProps {
-  name: string;
-  columns: ColumnProps[];
-}
-interface Boardprops {
+interface Props {
+  boards: BoardProps[];
   selectedBoard: string;
-  boards: BoardColumnProps[];
 }
 
-const Board = ({ selectedBoard, boards }: Boardprops) => {
+const Board = ({ selectedBoard, boards }: Props) => {
   const selectedBoardData = boards.find(
     (board) => board.name === selectedBoard
   );

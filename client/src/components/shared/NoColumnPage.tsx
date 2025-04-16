@@ -7,7 +7,7 @@ const NoColumnPage = () => {
       <p className="text-light-600 base-bold my-7">
         This board is empty. Create a new column to get started.
       </p>
-      <Button label="+ Add New Column" />
+      <Button type="button" label="+ Add New Column" />
     </div>
   );
 };

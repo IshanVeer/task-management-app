@@ -1,21 +1,12 @@
 import React from "react";
+import { TasksProps } from "@/types";
 import { generateRandomColor } from "@/lib/utils";
 import Card from "../card/Card";
 
-interface Subtasksprops {
-  title: string;
-  isCompleted: boolean;
-}
-interface Taskprops {
-  title: string;
-  description: string;
-  status: string;
-  subtasks: Subtasksprops[];
-}
 interface Columnprops {
   name: string;
   taskQty: number;
-  tasks: Taskprops[];
+  tasks: TasksProps[];
 }
 
 const Column = ({ name, taskQty, tasks }: Columnprops) => {
