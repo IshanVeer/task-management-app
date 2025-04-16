@@ -11,6 +11,9 @@ interface BoardFormProps {
 const BoardForm = ({ setBoards, onClose }: BoardFormProps) => {
   const [nameInput, setNameInput] = useState("");
   const [columns, setColumns] = useState([""]);
+  const [errors, setErrors] = useState<{ name?: string; columns?: string[] }>(
+    {}
+  );
 
   //   handle change columns
 
@@ -39,17 +42,40 @@ const BoardForm = ({ setBoards, onClose }: BoardFormProps) => {
   const boardFormSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const newErrors: { name?: string; columns?: string[] } = {};
+    let hasError = false;
+
+    if (!nameInput.trim()) {
+      newErrors.name = "Cannot be empty";
+      hasError = true;
+    }
+
+    const columnErrors = columns.map((column) =>
+      !column.trim() ? "Cannot be empty" : ""
+    );
+
+    if (columnErrors.some((err) => err)) {
+      newErrors.columns = columnErrors;
+      hasError = true;
+    }
+
+    setErrors(newErrors);
+
+    if (hasError) return;
+
     const newBoard = {
-      name: nameInput,
+      name: nameInput.trim(),
       columns: columns.map((column) => ({
-        name: column,
+        name: column.trim(),
         tasks: [],
       })),
     };
     setBoards((prevBoards) => [...prevBoards, newBoard]);
-    console.log(newBoard, " new Board");
 
     setNameInput("");
+    setColumns([""]);
+    setErrors({});
+
     onClose();
   };
 
@@ -68,8 +94,10 @@ const BoardForm = ({ setBoards, onClose }: BoardFormProps) => {
             onChange={(e) => {
               setNameInput(e.target.value);
             }}
-            placeholder="e.g. Web Design"
-            className="border paragraph-medium text-dark-100 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px]"
+            placeholder={errors.name || "e.g. Web Design"}
+            className={`border paragraph-medium text-dark-100 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px] ${
+              errors.name ? "border-red-500 placeholder:text-red-500" : ""
+            }`}
             id="name"
             type="text"
           />
@@ -84,8 +112,12 @@ const BoardForm = ({ setBoards, onClose }: BoardFormProps) => {
               <input
                 onChange={(e) => handleColumnChange(index, e.target.value)}
                 value={column}
-                placeholder="e.g. Todo"
-                className="border w-full paragraph-medium text-dark100_light900 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px]"
+                placeholder={errors.columns?.[index] || "e.g. Todo"}
+                className={`border w-full paragraph-medium text-dark100_light900 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px] ${
+                  errors.columns?.[index]
+                    ? "border-red-500 placeholder:text-red-500"
+                    : ""
+                }`}
                 type="text"
               />
               <button type="button" onClick={() => removeColumnHandler(index)}>
