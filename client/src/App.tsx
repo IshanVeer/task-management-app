@@ -55,7 +55,7 @@ function App() {
               </div>
             )}
             <section className="flex-1 h-screen overflow-x-auto w-full  border-l border-light">
-              <Board selectedBoard={selectedBoard} />
+              <Board boards={boards} selectedBoard={selectedBoard} />
             </section>
           </div>
         </div>

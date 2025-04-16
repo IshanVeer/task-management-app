@@ -58,12 +58,13 @@ const TaskForm = () => {
             </button>
           </div>
           <Button
+            type="button"
             className="mt-2"
             buttonType="secondary"
             label="+ Add New Subtask"
           />
         </div>
-        <Button className="w-full mt-6" label="Create Task" />
+        <Button type="submit" className="w-full mt-6" label="Create Task" />
       </form>
     </div>
   );

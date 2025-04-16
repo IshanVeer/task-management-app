@@ -89,6 +89,7 @@ const Navbar = ({
         <div className="flex items-center gap-4">
           <div className="max-md:hidden">
             <Button
+              type="button"
               disabled={selectedBoardData?.columns?.length === 0}
               label="+ Add New Task"
               openModal={openModalHandler}
