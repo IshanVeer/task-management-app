@@ -6,12 +6,14 @@ interface SetSelectedBoardTypes {
   setSelectedBoard: (board: string) => void;
   selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
+  openModalHandler: React.Dispatch<React.SetStateAction<"add-board" | null>>;
 }
 
 const LeftSidebar = ({
   setSelectedBoard,
   selectedBoard,
   setShowSidebar,
+  openModalHandler,
 }: SetSelectedBoardTypes) => {
   return (
     <div className=" max-sm:hidden  w-[300px] flex flex-col justify-between px-8 py-4   base-bold text-light-600  background-light900_dark400 ">
@@ -43,7 +45,12 @@ const LeftSidebar = ({
             </li>
           ))}
         </ul>
-        <button className="flex gap-4 my-4 cursor-pointer text-primary-500 items-center">
+        <button
+          onClick={() => {
+            openModalHandler("add-board");
+          }}
+          className="flex gap-4 my-4 cursor-pointer text-primary-500 items-center"
+        >
           <img src="/icons/icon-board-button.svg" alt="icon button" />
           <p>+ Create New Board</p>
         </button>

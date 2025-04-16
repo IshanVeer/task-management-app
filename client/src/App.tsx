@@ -4,15 +4,21 @@ import LeftSidebar from "./components/shared/LeftSidebar";
 import Navbar from "./components/shared/Navbar";
 import ThemeProvider from "./context/ThemeProvider";
 import Board from "./components/shared/Board";
+import BoardForm from "./components/forms/BoardForm";
 import Modal from "./components/ui/Modal";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
   const [showSidebar, setShowSidebar] = useState(true);
+  const [modalType, setModalType] = useState<"add-board" | null>(null);
   return (
     <>
       <ThemeProvider>
-        <Modal />
+        {/* isOpen === true and modalType !==null */}
+        <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
+          {modalType === "add-board" && <BoardForm />}
+        </Modal>
+
         <div className=" background-light800_dark300">
           <Navbar
             setSelectedBoard={setSelectedBoard}
@@ -25,6 +31,7 @@ function App() {
                 selectedBoard={selectedBoard}
                 setSelectedBoard={setSelectedBoard}
                 setShowSidebar={setShowSidebar}
+                openModalHandler={setModalType}
               />
             ) : (
               <div className="bg-primary-500 px-6 py-4 rounded-r-[50%] fixed bottom-12 self-start ">

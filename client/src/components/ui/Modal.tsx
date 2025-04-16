@@ -1,19 +1,26 @@
 import { createPortal } from "react-dom";
 import React from "react";
 
-const Modal = () => {
+interface ModalProps {
+  isOpen: boolean;
+  children: React.ReactNode;
+  onClose: () => void;
+}
+
+const Modal = ({ children, isOpen, onClose }: ModalProps) => {
+  if (!isOpen) return null;
   return createPortal(
     <div className="fixed inset-0 flex items-center justify-center z-50">
       {/* Dark backdrop */}
-      <div className="fixed inset-0 bg-dark-100 opacity-75 "></div>
+      <div
+        onClick={onClose}
+        className="fixed inset-0 bg-black opacity-65 "
+      ></div>
 
       {/* Modal content */}
-      <div className="background-light900_dark400 rounded-lg p-6 w-full max-w-md mx-4 z-10">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold">title</h3>
-        </div>
+      <div className="background-light900_dark400 rounded-lg py-8 px-6 w-full max-w-md mx-4 z-10">
         {/* <div>{children}</div> */}
-        <div>modal content</div>
+        <div>{children}</div>
       </div>
     </div>,
     document.getElementById("modal")!
