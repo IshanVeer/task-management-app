@@ -13,9 +13,16 @@ import Theme from "./Theme";
 interface Navbarprops {
   selectedBoard: string;
   setSelectedBoard: (board: string) => void;
+  openModalHandler: React.Dispatch<
+    React.SetStateAction<"add-board" | "add-task" | null>
+  >;
 }
 
-const Navbar = ({ selectedBoard, setSelectedBoard }: Navbarprops) => {
+const Navbar = ({
+  selectedBoard,
+  setSelectedBoard,
+  openModalHandler,
+}: Navbarprops) => {
   const { mode } = useTheme();
   const selectedBoardData = data.boards.find(
     (board) => board.name === selectedBoard
@@ -84,6 +91,7 @@ const Navbar = ({ selectedBoard, setSelectedBoard }: Navbarprops) => {
             <Button
               disabled={selectedBoardData?.columns?.length === 0}
               label="+ Add New Task"
+              openModal={openModalHandler}
             />
           </div>
           <div className="md:hidden">

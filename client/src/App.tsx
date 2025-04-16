@@ -6,23 +6,28 @@ import ThemeProvider from "./context/ThemeProvider";
 import Board from "./components/shared/Board";
 import BoardForm from "./components/forms/BoardForm";
 import Modal from "./components/ui/Modal";
+import TaskForm from "./components/forms/TaskForm";
 
 function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
   const [showSidebar, setShowSidebar] = useState(true);
-  const [modalType, setModalType] = useState<"add-board" | null>(null);
+  const [modalType, setModalType] = useState<"add-board" | "add-task" | null>(
+    null
+  );
   return (
     <>
       <ThemeProvider>
         {/* isOpen === true and modalType !==null */}
         <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
           {modalType === "add-board" && <BoardForm />}
+          {modalType === "add-task" && <TaskForm />}
         </Modal>
 
         <div className=" background-light800_dark300">
           <Navbar
             setSelectedBoard={setSelectedBoard}
             selectedBoard={selectedBoard}
+            openModalHandler={setModalType}
           />
 
           <div className="flex">

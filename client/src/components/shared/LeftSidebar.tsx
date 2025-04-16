@@ -6,7 +6,9 @@ interface SetSelectedBoardTypes {
   setSelectedBoard: (board: string) => void;
   selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
-  openModalHandler: React.Dispatch<React.SetStateAction<"add-board" | null>>;
+  openModalHandler: React.Dispatch<
+    React.SetStateAction<"add-board" | "add-task" | null>
+  >;
 }
 
 const LeftSidebar = ({
