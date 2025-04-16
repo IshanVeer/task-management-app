@@ -57,7 +57,11 @@ const TaskForm = () => {
               <img src="/icons/icon-cross.svg" alt="remove-tasks" />
             </button>
           </div>
-          <Button className="mt-2" type="secondary" label="+ Add New Subtask" />
+          <Button
+            className="mt-2"
+            buttonType="secondary"
+            label="+ Add New Subtask"
+          />
         </div>
         <Button className="w-full mt-6" label="Create Task" />
       </form>

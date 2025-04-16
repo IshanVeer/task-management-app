@@ -45,7 +45,11 @@ const BoardForm = () => {
               <img src="/icons/icon-cross.svg" alt="remove-board" />
             </button>
           </div>
-          <Button className="mt-2" type="secondary" label="+ Add New Column" />
+          <Button
+            className="mt-2"
+            buttonType="secondary"
+            label="+ Add New Column"
+          />
         </div>
         <Button className="w-full mt-6" label="Create New Board" />
       </form>

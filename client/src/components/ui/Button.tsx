@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ButtonProps {
-  type?: string;
+  buttonType?: string;
   label: string;
   disabled?: boolean;
   className?: string;
@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 const Button = ({
-  type,
+  buttonType,
   label,
   disabled,
   className,
@@ -19,12 +19,13 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
+      type="button"
       disabled={disabled}
       onClick={() => openModal?.("add-task")}
       className={`${className} py-3 px-6 disabled:bg-primary-700 disabled:cursor-not-allowed cursor-pointer transition duration-150 rounded-4xl base-bold ${
-        type === "secondary"
+        buttonType === "secondary"
           ? "button-secondary "
-          : type === "destruct"
+          : buttonType === "destruct"
           ? "button-destructive"
           : "button-primary"
       } `}
