@@ -24,7 +24,12 @@ function App() {
       <ThemeProvider>
         {/* isOpen === true and modalType !==null */}
         <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
-          {modalType === "add-board" && <BoardForm setBoards={setBoards} />}
+          {modalType === "add-board" && (
+            <BoardForm
+              onClose={() => setModalType(null)}
+              setBoards={setBoards}
+            />
+          )}
           {modalType === "add-task" && <TaskForm />}
         </Modal>
 

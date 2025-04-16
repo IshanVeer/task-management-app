@@ -5,9 +5,10 @@ import Button from "../ui/Button";
 
 interface BoardFormProps {
   setBoards: Dispatch<SetStateAction<BoardProps[]>>;
+  onClose: () => void;
 }
 
-const BoardForm = ({ setBoards }: BoardFormProps) => {
+const BoardForm = ({ setBoards, onClose }: BoardFormProps) => {
   const [nameInput, setNameInput] = useState("");
   const [columns, setColumns] = useState([""]);
 
@@ -47,7 +48,9 @@ const BoardForm = ({ setBoards }: BoardFormProps) => {
     };
     setBoards((prevBoards) => [...prevBoards, newBoard]);
     console.log(newBoard, " new Board");
+
     setNameInput("");
+    onClose();
   };
 
   return (
