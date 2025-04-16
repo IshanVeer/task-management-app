@@ -1,13 +1,10 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { BoardProps } from "@/types";
 
 import Button from "../ui/Button";
 
-interface Board {
-  name: string;
-}
-
 interface BoardFormProps {
-  setBoards: Dispatch<SetStateAction<Board[]>>;
+  setBoards: Dispatch<SetStateAction<BoardProps[]>>;
 }
 
 const BoardForm = ({ setBoards }: BoardFormProps) => {
