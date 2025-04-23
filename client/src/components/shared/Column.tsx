@@ -24,7 +24,7 @@ const Column = ({ name, taskQty, tasks }: Columnprops) => {
       </div>
 
       <ul className="w-full">
-        {tasks.map((task) => (
+        {(tasks || []).map((task) => (
           <li className="py-2" key={task.title}>
             <Card title={task.title} subtasks={task.subtasks} />
           </li>

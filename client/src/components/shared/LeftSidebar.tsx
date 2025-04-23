@@ -68,10 +68,7 @@ const LeftSidebar = ({
           onClick={() => setShowSidebar(false)}
           className="flex cursor-pointer items-center gap-4"
         >
-          <img
-            src="../../../public/icons/icon-hide-sidebar.svg"
-            alt="hide-sidebar"
-          />
+          <img src="/icons/icon-hide-sidebar.svg" alt="hide-sidebar" />
           <p>Hide Sidebar</p>
         </button>
       </div>

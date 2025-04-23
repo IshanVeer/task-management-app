@@ -25,8 +25,9 @@ const Board = ({ selectedBoard, boards }: Props) => {
     <div className="flex p-6 gap-6">
       {selectedBoardData?.columns.map((column) => (
         <Column
-          tasks={column.tasks}
-          taskQty={column.tasks.length}
+          key={column.name}
+          tasks={column?.tasks}
+          taskQty={column.tasks?.length || 0}
           name={column.name}
         />
       ))}
