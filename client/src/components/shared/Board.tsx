@@ -6,9 +6,14 @@ import Column from "./Column";
 interface Props {
   boards: BoardProps[];
   selectedBoard: string;
+  setModalType: React.Dispatch<
+    React.SetStateAction<
+      "add-board" | "add-task" | "delete-board" | "task-details" | null
+    >
+  >;
 }
 
-const Board = ({ selectedBoard, boards }: Props) => {
+const Board = ({ selectedBoard, boards, setModalType }: Props) => {
   const selectedBoardData = boards.find(
     (board) => board.name === selectedBoard
   );
@@ -25,6 +30,7 @@ const Board = ({ selectedBoard, boards }: Props) => {
     <div className="flex p-6 gap-6">
       {selectedBoardData?.columns.map((column) => (
         <Column
+          setModalType={setModalType}
           key={column.name}
           tasks={column?.tasks}
           taskQty={column.tasks?.length || 0}

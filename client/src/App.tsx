@@ -12,6 +12,7 @@ import { database } from "./firebase";
 import { BoardProps } from "./types";
 
 import DeleteBoard from "./components/shared/DeleteBoard";
+import TaskDetails from "./components/shared/TaskDetails";
 
 function App() {
   const [boards, setBoards] = useState<BoardProps[]>([]);
@@ -20,7 +21,7 @@ function App() {
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
   const [showSidebar, setShowSidebar] = useState(true);
   const [modalType, setModalType] = useState<
-    "add-board" | "add-task" | "delete-board" | null
+    "add-board" | "add-task" | "delete-board" | "task-details" | null
   >(null);
 
   // fetch board data
@@ -58,7 +59,6 @@ function App() {
 
     return () => unsubscribe();
   }, [selectedBoard]);
-  console.log(boards, "boards data");
 
   return (
     <>
@@ -70,8 +70,12 @@ function App() {
           )}
           {modalType === "add-task" && <TaskForm />}
           {modalType === "delete-board" && (
-            <DeleteBoard onClose={() => setModalType(null)} />
+            <DeleteBoard
+              selectedBoard={selectedBoard}
+              onClose={() => setModalType(null)}
+            />
           )}
+          {modalType === "task-details" && <TaskDetails />}
         </Modal>
 
         <div className=" background-light800_dark300">
@@ -101,7 +105,11 @@ function App() {
               </div>
             )}
             <section className="flex-1 h-screen overflow-x-auto w-full  border-l border-light">
-              <Board boards={boards} selectedBoard={selectedBoard} />
+              <Board
+                setModalType={setModalType}
+                boards={boards}
+                selectedBoard={selectedBoard}
+              />
             </section>
           </div>
         </div>

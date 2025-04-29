@@ -7,9 +7,14 @@ interface Columnprops {
   name: string;
   taskQty: number;
   tasks: TasksProps[];
+  setModalType: React.Dispatch<
+    React.SetStateAction<
+      "add-board" | "add-task" | "delete-board" | "task-details" | null
+    >
+  >;
 }
 
-const Column = ({ name, taskQty, tasks }: Columnprops) => {
+const Column = ({ name, taskQty, tasks, setModalType }: Columnprops) => {
   const randomColor = generateRandomColor();
   return (
     <div className="w-[280px] flex-shrink-0 ">
@@ -26,7 +31,12 @@ const Column = ({ name, taskQty, tasks }: Columnprops) => {
       <ul className="w-full">
         {(tasks || []).map((task) => (
           <li className="py-2" key={task.title}>
-            <Card title={task.title} subtasks={task.subtasks} />
+            <button
+              onClick={() => setModalType("task-details")}
+              className="w-full cursor-pointer text-left"
+            >
+              <Card title={task.title} subtasks={task.subtasks} />
+            </button>
           </li>
         ))}
       </ul>
