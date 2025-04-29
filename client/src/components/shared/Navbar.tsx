@@ -13,15 +13,15 @@ import Theme from "./Theme";
 interface Navbarprops {
   selectedBoard: string;
   setSelectedBoard: (board: string) => void;
-  openModalHandler: React.Dispatch<
-    React.SetStateAction<"add-board" | "add-task" | null>
+  setModalType: React.Dispatch<
+    React.SetStateAction<"add-board" | "add-task" | "delete-board" | null>
   >;
 }
 
 const Navbar = ({
   selectedBoard,
   setSelectedBoard,
-  openModalHandler,
+  setModalType,
 }: Navbarprops) => {
   const { mode } = useTheme();
   const selectedBoardData = data.boards.find(
@@ -90,9 +90,10 @@ const Navbar = ({
           <div className="max-md:hidden">
             <Button
               type="button"
+              modalToOpen="add-task"
               disabled={selectedBoardData?.columns?.length === 0}
               label="+ Add New Task"
-              openModal={openModalHandler}
+              openModal={setModalType}
             />
           </div>
           <div className="md:hidden">
@@ -104,9 +105,6 @@ const Navbar = ({
             </button>
           </div>
 
-          {/* <button className="cursor-pointer">
-            <img src="/icons/icon-vertical-ellipsis.svg" alt="menu" />
-          </button> */}
           <Menubar className="focus:ring-0 focus:outline-none focus:border-none border-0 background-light900_dark400 shadow-none outline-0">
             <MenubarMenu>
               <MenubarTrigger className="border-0 cursor-pointer bg-transparent bg-da outline-0">
@@ -116,7 +114,10 @@ const Navbar = ({
                 <MenubarItem className="cursor-pointer hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit">
                   Edit Board
                 </MenubarItem>
-                <MenubarItem className="cursor-pointer text-red-500 hover:bg-transparent hover:text-red-500 focus:bg-transparent focus:text-red-500">
+                <MenubarItem
+                  onClick={() => setModalType("delete-board")}
+                  className="cursor-pointer text-red-500 hover:bg-transparent hover:text-red-500 focus:bg-transparent focus:text-red-500"
+                >
                   Delete Board
                 </MenubarItem>
               </MenubarContent>

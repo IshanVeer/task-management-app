@@ -2,13 +2,13 @@ import React from "react";
 
 interface ButtonProps {
   buttonType?: string;
+  onClose?: () => void;
   type: "button" | "submit" | "reset";
   label: string;
+  modalToOpen?: "add-board" | "add-task" | "delete-event";
   disabled?: boolean;
   className?: string;
-  openModal?: React.Dispatch<
-    React.SetStateAction<"add-board" | "add-task" | null>
-  >;
+  openModal?: (modal: "add-board" | "add-task" | "delete-board") => void;
   onChange?: () => void;
 }
 
@@ -17,6 +17,7 @@ const Button = ({
   label,
   disabled,
   className,
+  onClose,
   openModal,
   type,
   onChange,
@@ -26,6 +27,7 @@ const Button = ({
       type={type}
       disabled={disabled}
       onClick={() => {
+        if (onClose) onClose();
         if (onChange) onChange();
         if (openModal) openModal?.("add-task");
       }}

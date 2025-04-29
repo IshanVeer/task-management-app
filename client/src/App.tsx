@@ -10,7 +10,8 @@ import TaskForm from "./components/forms/TaskForm";
 import { onValue, ref } from "firebase/database";
 import { database } from "./firebase";
 import { BoardProps } from "./types";
-import { data } from "./constants";
+
+import DeleteBoard from "./components/shared/DeleteBoard";
 
 function App() {
   const [boards, setBoards] = useState<BoardProps[]>([]);
@@ -18,10 +19,9 @@ function App() {
 
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
   const [showSidebar, setShowSidebar] = useState(true);
-  const [modalType, setModalType] = useState<"add-board" | "add-task" | null>(
-    null
-  );
-  console.log(data, "data from constants");
+  const [modalType, setModalType] = useState<
+    "add-board" | "add-task" | "delete-board" | null
+  >(null);
 
   // fetch board data
   useEffect(() => {
@@ -69,13 +69,16 @@ function App() {
             <BoardForm onClose={() => setModalType(null)} />
           )}
           {modalType === "add-task" && <TaskForm />}
+          {modalType === "delete-board" && (
+            <DeleteBoard onClose={() => setModalType(null)} />
+          )}
         </Modal>
 
         <div className=" background-light800_dark300">
           <Navbar
             setSelectedBoard={setSelectedBoard}
             selectedBoard={selectedBoard}
-            openModalHandler={setModalType}
+            setModalType={setModalType}
           />
 
           <div className="flex">
@@ -85,7 +88,7 @@ function App() {
                 selectedBoard={selectedBoard}
                 setSelectedBoard={setSelectedBoard}
                 setShowSidebar={setShowSidebar}
-                openModalHandler={setModalType}
+                setModalType={setModalType}
               />
             ) : (
               <div className="bg-primary-500 px-6 py-4 rounded-r-[50%] fixed bottom-12 self-start ">

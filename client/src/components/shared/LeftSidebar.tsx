@@ -9,8 +9,8 @@ interface SetSelectedBoardTypes {
   boards: BoardsProps[];
   selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
-  openModalHandler: React.Dispatch<
-    React.SetStateAction<"add-board" | "add-task" | null>
+  setModalType: React.Dispatch<
+    React.SetStateAction<"add-board" | "add-task" | "delete-board" | null>
   >;
 }
 
@@ -18,7 +18,7 @@ const LeftSidebar = ({
   setSelectedBoard,
   selectedBoard,
   setShowSidebar,
-  openModalHandler,
+  setModalType,
   boards,
 }: SetSelectedBoardTypes) => {
   return (
@@ -53,7 +53,7 @@ const LeftSidebar = ({
         </ul>
         <button
           onClick={() => {
-            openModalHandler("add-board");
+            setModalType("add-board");
           }}
           className="flex gap-4 my-4 cursor-pointer text-primary-500 items-center"
         >
