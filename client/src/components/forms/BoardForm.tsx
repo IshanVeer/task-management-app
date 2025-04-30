@@ -12,6 +12,7 @@ interface BoardFormProps {
 const BoardForm = ({ onClose }: BoardFormProps) => {
   const [boardName, setBoardName] = useState("");
   const [boardNameError, setBoardNameError] = useState(false);
+  const [columnInputError, setColumnInputError] = useState<boolean[]>([]);
   const [columns, setColumns] = useState(["Todo"]);
 
   // handling column change
@@ -40,12 +41,24 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
+    const trimmedColumns = columns.map((col) => col.trim());
+    const newColumnErrors = trimmedColumns.map((col) => col === "");
+    const hasEmptyColumns = newColumnErrors.includes(true);
 
     if (!boardName.trim()) {
       setBoardNameError(true);
       return;
     } //if board name does not exist stop the function
+
+    // if columns are empty
+    if (hasEmptyColumns) {
+      setColumnInputError(newColumnErrors);
+      return;
+    }
+
     setBoardNameError(false);
+    setColumnInputError([]);
+
     const filteredColumns = columns
       .map((col) => col.trim())
       .filter((col) => col !== ""); // remove any white space or and empty string from the array
@@ -102,24 +115,43 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
             Columns
           </label>
           {columns.map((col, index) => (
-            <div
-              className="flex gap-4 items-center justify-between"
-              key={index}
-            >
-              <input
-                onChange={(e) => handleColumnChange(index, e.target.value)}
-                id="column"
-                className={`border w-full paragraph-medium text-dark-100 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px] 
-            `}
-                value={col}
-                type="text"
-              />
-              <button
-                onClick={() => deleteColumn(index)}
-                className="cursor-pointer"
+            <div>
+              <div
+                className="flex gap-4 items-center justify-between"
+                key={index}
               >
-                <img src="/icons/icon-cross.svg" alt="delete-column" />
-              </button>
+                <input
+                  onChange={(e) => {
+                    handleColumnChange(index, e.target.value);
+                    if (columnInputError[index]) {
+                      const newErrors = [...columnInputError];
+                      newErrors[index] = false;
+                      setColumnInputError(newErrors);
+                    }
+                  }}
+                  id="column"
+                  className={`border w-full paragraph-medium text-dark-100 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px] 
+            ${columnInputError[index] ? "border-red-500" : ""} `}
+                  value={col}
+                  type="text"
+                />
+
+                <button
+                  onClick={() => deleteColumn(index)}
+                  className="cursor-pointer"
+                >
+                  <img
+                    className="hover:fill-red-500"
+                    src="/icons/icon-cross.svg"
+                    alt="delete-column"
+                  />
+                </button>
+              </div>
+              {columnInputError[index] && (
+                <p className="text-red-500 my-2 paragraph-medium">
+                  Can't be empty
+                </p>
+              )}
             </div>
           ))}
 
