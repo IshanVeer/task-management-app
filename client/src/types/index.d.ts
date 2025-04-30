@@ -17,3 +17,12 @@ export interface BoardProps {
   name: string;
   columns: ColumnsProps[];
 }
+
+export type ModalTypes =
+  | "add-board"
+  | "add-task"
+  | "delete-board"
+  | "task-details"
+  | "delete-task"
+  | "edit-board"
+  | null;

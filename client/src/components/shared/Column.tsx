@@ -1,5 +1,5 @@
 import React from "react";
-import { TasksProps } from "@/types";
+import { ModalTypes, TasksProps } from "@/types";
 import { generateRandomColor } from "@/lib/utils";
 import Card from "../card/Card";
 
@@ -8,16 +8,7 @@ interface Columnprops {
   taskQty: number;
   setSelectedTask: React.Dispatch<React.SetStateAction<TasksProps | null>>;
   tasks: TasksProps[];
-  setModalType: React.Dispatch<
-    React.SetStateAction<
-      | "add-board"
-      | "add-task"
-      | "delete-board"
-      | "task-details"
-      | "delete-task"
-      | null
-    >
-  >;
+  setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const Column = ({

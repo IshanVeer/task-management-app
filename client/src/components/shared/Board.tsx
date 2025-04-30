@@ -1,4 +1,4 @@
-import { BoardProps, TasksProps } from "@/types";
+import { BoardProps, ModalTypes, TasksProps } from "@/types";
 
 import NoColumnPage from "./NoColumnPage";
 import Column from "./Column";
@@ -7,16 +7,7 @@ interface Props {
   boards: BoardProps[];
   setSelectedTask: React.Dispatch<React.SetStateAction<TasksProps | null>>;
   selectedBoard: string;
-  setModalType: React.Dispatch<
-    React.SetStateAction<
-      | "add-board"
-      | "add-task"
-      | "delete-board"
-      | "task-details"
-      | "delete-task"
-      | null
-    >
-  >;
+  setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const Board = ({

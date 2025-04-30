@@ -27,6 +27,7 @@ function App() {
     | "delete-board"
     | "task-details"
     | "delete-task"
+    | "edit-board"
     | null
   >(null);
 
@@ -72,7 +73,10 @@ function App() {
         {/* isOpen === true and modalType !==null */}
         <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
           {modalType === "add-board" && (
-            <BoardForm onClose={() => setModalType(null)} />
+            <BoardForm mode="create" onClose={() => setModalType(null)} />
+          )}
+          {modalType === "edit-board" && (
+            <BoardForm mode="edit" onClose={() => setModalType(null)} />
           )}
           {modalType === "add-task" && <TaskForm />}
           {modalType === "delete-board" && (

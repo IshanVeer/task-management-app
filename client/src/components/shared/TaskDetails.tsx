@@ -1,4 +1,4 @@
-import { BoardProps, TasksProps } from "@/types";
+import { BoardProps, ModalTypes, TasksProps } from "@/types";
 
 import {
   Select,
@@ -18,16 +18,7 @@ import {
 interface TaskDetailsProps {
   task?: TasksProps | null;
   board: BoardProps;
-  setModalType: React.Dispatch<
-    React.SetStateAction<
-      | "add-board"
-      | "add-task"
-      | "delete-board"
-      | "task-details"
-      | "delete-task"
-      | null
-    >
-  >;
+  setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const TaskDetails = ({ task, board, setModalType }: TaskDetailsProps) => {

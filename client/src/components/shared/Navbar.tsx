@@ -9,20 +9,12 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import Theme from "./Theme";
+import { ModalTypes } from "@/types";
 
 interface Navbarprops {
   selectedBoard: string;
   setSelectedBoard: (board: string) => void;
-  setModalType: React.Dispatch<
-    React.SetStateAction<
-      | "add-board"
-      | "add-task"
-      | "delete-board"
-      | "task-details"
-      | "delete-task"
-      | null
-    >
-  >;
+  setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const Navbar = ({
@@ -118,7 +110,10 @@ const Navbar = ({
                 <img src="/icons/icon-vertical-ellipsis.svg" alt="menu" />
               </MenubarTrigger>
               <MenubarContent className="relative px-2 py-4 shadow-none paragraph-medium text-light-600 border-0 background-light900_dark300 top-3 right-8">
-                <MenubarItem className="cursor-pointer hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit">
+                <MenubarItem
+                  onClick={() => setModalType("edit-board")}
+                  className="cursor-pointer hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit"
+                >
                   Edit Board
                 </MenubarItem>
                 <MenubarItem

@@ -1,3 +1,4 @@
+import { ModalTypes } from "@/types";
 import Theme from "./Theme";
 
 interface BoardsProps {
@@ -9,16 +10,7 @@ interface SetSelectedBoardTypes {
   boards: BoardsProps[];
   selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
-  setModalType: React.Dispatch<
-    React.SetStateAction<
-      | "add-board"
-      | "add-task"
-      | "delete-board"
-      | "task-details"
-      | "delete-task"
-      | null
-    >
-  >;
+  setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const LeftSidebar = ({

@@ -7,9 +7,10 @@ import { database } from "@/firebase";
 
 interface BoardFormProps {
   onClose: () => void;
+  mode: "create" | "edit";
 }
 
-const BoardForm = ({ onClose }: BoardFormProps) => {
+const BoardForm = ({ onClose, mode }: BoardFormProps) => {
   const [boardName, setBoardName] = useState("");
   const [boardNameError, setBoardNameError] = useState(false);
   const [columnInputError, setColumnInputError] = useState<boolean[]>([]);
@@ -81,7 +82,11 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
 
   return (
     <div>
-      <h3 className="h2-bold">Add New Board</h3>
+      {mode === "edit" ? (
+        <h3 className="h2-bold">Edit Board</h3>
+      ) : (
+        <h3 className="h2-bold">Add New Board</h3>
+      )}
 
       <form onSubmit={boardFormSubmitHandler} action="">
         {/* name */}
