@@ -43,12 +43,19 @@
   .text-dark100_light900 {
     @apply text-dark-100 dark:text-light-900;
   }
+  .text-light600_light900 {
+    @apply text-light-600 dark:text-light-900;
+  }
   .placeholder {
     @apply placeholder:text-light-800;
   }
   .background-light800_dark300 {
     @apply bg-light-800 dark:bg-dark-300;
   }
+  .background-light800_darkCustom {
+    @apply bg-light-800 dark:bg-[#1f202b];
+  }
+
   .border-light {
     @apply border-light-700 dark:border-light-600;
   }

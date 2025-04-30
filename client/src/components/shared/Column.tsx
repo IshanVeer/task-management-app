@@ -6,15 +6,27 @@ import Card from "../card/Card";
 interface Columnprops {
   name: string;
   taskQty: number;
+  setSelectedTask: React.Dispatch<React.SetStateAction<TasksProps | null>>;
   tasks: TasksProps[];
   setModalType: React.Dispatch<
     React.SetStateAction<
-      "add-board" | "add-task" | "delete-board" | "task-details" | null
+      | "add-board"
+      | "add-task"
+      | "delete-board"
+      | "task-details"
+      | "delete-task"
+      | null
     >
   >;
 }
 
-const Column = ({ name, taskQty, tasks, setModalType }: Columnprops) => {
+const Column = ({
+  name,
+  taskQty,
+  tasks,
+  setModalType,
+  setSelectedTask,
+}: Columnprops) => {
   const randomColor = generateRandomColor();
   return (
     <div className="w-[280px] flex-shrink-0 ">
@@ -32,7 +44,10 @@ const Column = ({ name, taskQty, tasks, setModalType }: Columnprops) => {
         {(tasks || []).map((task) => (
           <li className="py-2" key={task.title}>
             <button
-              onClick={() => setModalType("task-details")}
+              onClick={() => {
+                setSelectedTask(task);
+                setModalType("task-details");
+              }}
               className="w-full cursor-pointer text-left"
             >
               <Card title={task.title} subtasks={task.subtasks} />

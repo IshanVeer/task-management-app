@@ -11,7 +11,12 @@ interface SetSelectedBoardTypes {
   setShowSidebar: (show: boolean) => void;
   setModalType: React.Dispatch<
     React.SetStateAction<
-      "add-board" | "add-task" | "delete-board" | "task-details" | null
+      | "add-board"
+      | "add-task"
+      | "delete-board"
+      | "task-details"
+      | "delete-task"
+      | null
     >
   >;
 }

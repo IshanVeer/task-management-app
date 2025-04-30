@@ -9,19 +9,25 @@ import Modal from "./components/ui/Modal";
 import TaskForm from "./components/forms/TaskForm";
 import { onValue, ref } from "firebase/database";
 import { database } from "./firebase";
-import { BoardProps } from "./types";
+import { BoardProps, TasksProps } from "./types";
 
 import DeleteBoard from "./components/shared/DeleteBoard";
 import TaskDetails from "./components/shared/TaskDetails";
+import DeleteTask from "./components/shared/DeleteTask";
 
 function App() {
   const [boards, setBoards] = useState<BoardProps[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [selectedTask, setSelectedTask] = useState<TasksProps | null>(null);
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
   const [showSidebar, setShowSidebar] = useState(true);
   const [modalType, setModalType] = useState<
-    "add-board" | "add-task" | "delete-board" | "task-details" | null
+    | "add-board"
+    | "add-task"
+    | "delete-board"
+    | "task-details"
+    | "delete-task"
+    | null
   >(null);
 
   // fetch board data
@@ -75,7 +81,19 @@ function App() {
               onClose={() => setModalType(null)}
             />
           )}
-          {modalType === "task-details" && <TaskDetails />}
+          {modalType === "task-details" && (
+            <TaskDetails
+              board={boards.find((board) => board.name === selectedBoard)!}
+              task={selectedTask}
+              setModalType={setModalType}
+            />
+          )}
+          {modalType === "delete-task" && (
+            <DeleteTask
+              selectedTask={selectedTask}
+              onClose={() => setModalType(null)}
+            />
+          )}
         </Modal>
 
         <div className=" background-light800_dark300">
@@ -107,6 +125,7 @@ function App() {
             <section className="flex-1 h-screen overflow-x-auto w-full  border-l border-light">
               <Board
                 setModalType={setModalType}
+                setSelectedTask={setSelectedTask}
                 boards={boards}
                 selectedBoard={selectedBoard}
               />

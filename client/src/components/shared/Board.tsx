@@ -1,19 +1,30 @@
-import { BoardProps } from "@/types";
+import { BoardProps, TasksProps } from "@/types";
 
 import NoColumnPage from "./NoColumnPage";
 import Column from "./Column";
 
 interface Props {
   boards: BoardProps[];
+  setSelectedTask: React.Dispatch<React.SetStateAction<TasksProps | null>>;
   selectedBoard: string;
   setModalType: React.Dispatch<
     React.SetStateAction<
-      "add-board" | "add-task" | "delete-board" | "task-details" | null
+      | "add-board"
+      | "add-task"
+      | "delete-board"
+      | "task-details"
+      | "delete-task"
+      | null
     >
   >;
 }
 
-const Board = ({ selectedBoard, boards, setModalType }: Props) => {
+const Board = ({
+  selectedBoard,
+  boards,
+  setModalType,
+  setSelectedTask,
+}: Props) => {
   const selectedBoardData = boards.find(
     (board) => board.name === selectedBoard
   );
@@ -30,6 +41,7 @@ const Board = ({ selectedBoard, boards, setModalType }: Props) => {
     <div className="flex p-6 gap-6">
       {selectedBoardData?.columns.map((column) => (
         <Column
+          setSelectedTask={setSelectedTask}
           setModalType={setModalType}
           key={column.name}
           tasks={column?.tasks}
