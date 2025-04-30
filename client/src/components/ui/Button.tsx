@@ -2,6 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   buttonType?: string;
+  onClick?: () => void;
   onClose?: () => void;
   type: "button" | "submit" | "reset";
   label: string;
@@ -17,6 +18,7 @@ const Button = ({
   label,
   disabled,
   className,
+  onClick,
   onClose,
   openModal,
   type,
@@ -27,6 +29,7 @@ const Button = ({
       type={type}
       disabled={disabled}
       onClick={() => {
+        if (onClick) onClick();
         if (onClose) onClose();
         if (onChange) onChange();
         if (openModal) openModal?.("add-task");
