@@ -27,6 +27,13 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
     setColumns([...columns, ""]); // pull all stored columns and then add one column
   };
 
+  // Delete Column
+  const deleteColumn = (index: number) => {
+    const newColumn = [...columns];
+    newColumn.splice(index, 1);
+    setColumns(newColumn);
+  };
+
   // create new board submit handler
   const boardFormSubmitHandler = async (
     event: React.FormEvent<HTMLFormElement>
@@ -94,7 +101,10 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
                 value={col}
                 type="text"
               />
-              <button className="cursor-pointer">
+              <button
+                onClick={() => deleteColumn(index)}
+                className="cursor-pointer"
+              >
                 <img src="/icons/icon-cross.svg" alt="delete-column" />
               </button>
             </div>
