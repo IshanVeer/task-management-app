@@ -11,6 +11,7 @@ interface BoardFormProps {
 
 const BoardForm = ({ onClose }: BoardFormProps) => {
   const [boardName, setBoardName] = useState("");
+  const [boardNameError, setBoardNameError] = useState(false);
   const [columns, setColumns] = useState(["Todo"]);
 
   // handling column change
@@ -41,8 +42,10 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
     event.preventDefault();
 
     if (!boardName.trim()) {
+      setBoardNameError(true);
       return;
     } //if board name does not exist stop the function
+    setBoardNameError(false);
     const filteredColumns = columns
       .map((col) => col.trim())
       .filter((col) => col !== ""); // remove any white space or and empty string from the array
@@ -75,13 +78,23 @@ const BoardForm = ({ onClose }: BoardFormProps) => {
           </label>
           <input
             value={boardName}
-            onChange={(e) => setBoardName(e.target.value)}
+            onChange={(e) => {
+              setBoardName(e.target.value);
+              if (boardNameError) setBoardNameError(false);
+            }}
             placeholder="e.g. Web Design"
             className={`border paragraph-medium text-dark-100 placeholder:text-xs p-2 px-4 placeholder:text-neutral-300 rounded-[4px] 
-            `}
+            ${boardNameError ? "border-red-500" : ""} `}
             id="name"
             type="text"
           />
+          {boardNameError ? (
+            <p className="text-red-500 paragraph-medium">
+              Enter Valid Board Name
+            </p>
+          ) : (
+            ""
+          )}
         </div>
         {/* columns */}
         <div className="flex flex-col gap-2 ">
