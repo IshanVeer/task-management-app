@@ -76,7 +76,11 @@ function App() {
             <BoardForm mode="create" onClose={() => setModalType(null)} />
           )}
           {modalType === "edit-board" && (
-            <BoardForm mode="edit" onClose={() => setModalType(null)} />
+            <BoardForm
+              board={boards.find((board) => board.name === selectedBoard)}
+              mode="edit"
+              onClose={() => setModalType(null)}
+            />
           )}
           {modalType === "add-task" && <TaskForm />}
           {modalType === "delete-board" && (

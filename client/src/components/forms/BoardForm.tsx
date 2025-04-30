@@ -1,20 +1,32 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Button from "../ui/Button";
-import { push, ref } from "firebase/database";
+import { push, ref, set } from "firebase/database";
 import { database } from "@/firebase";
+import { BoardProps } from "@/types";
 
 interface BoardFormProps {
+  board?: BoardProps;
   onClose: () => void;
   mode: "create" | "edit";
 }
 
-const BoardForm = ({ onClose, mode }: BoardFormProps) => {
+const BoardForm = ({ onClose, mode, board }: BoardFormProps) => {
   const [boardName, setBoardName] = useState("");
   const [boardNameError, setBoardNameError] = useState(false);
   const [columnInputError, setColumnInputError] = useState<boolean[]>([]);
   const [columns, setColumns] = useState(["Todo"]);
+  console.log(board, "selected board");
+
+  // pre fill the form incase of edit form
+
+  useEffect(() => {
+    if (mode === "edit" && board) {
+      setBoardName(board.name);
+      setColumns(board.columns.map((col) => col.name));
+    }
+  }, [mode, board]);
 
   // handling column change
 
@@ -64,7 +76,7 @@ const BoardForm = ({ onClose, mode }: BoardFormProps) => {
       .map((col) => col.trim())
       .filter((col) => col !== ""); // remove any white space or and empty string from the array
 
-    const newBoard = {
+    const updatedBoard = {
       name: boardName,
       columns: filteredColumns.map((col) => ({
         name: col,
@@ -72,8 +84,14 @@ const BoardForm = ({ onClose, mode }: BoardFormProps) => {
       })),
     };
     try {
-      const boardsRef = ref(database, "boards");
-      await push(boardsRef, newBoard);
+      if (mode === "edit" && board?.id) {
+        const boardsRef = ref(database, `boards/${board?.id}`);
+        await set(boardsRef, updatedBoard);
+      } else {
+        const boardsRef = ref(database, "boards");
+        await push(boardsRef, updatedBoard);
+      }
+
       onClose();
     } catch (error) {
       console.log(error, "Failed to create board");
@@ -120,11 +138,8 @@ const BoardForm = ({ onClose, mode }: BoardFormProps) => {
             Columns
           </label>
           {columns.map((col, index) => (
-            <div>
-              <div
-                className="flex gap-4 items-center justify-between"
-                key={index}
-              >
+            <div key={index}>
+              <div className="flex gap-4 items-center justify-between">
                 <input
                   onChange={(e) => {
                     handleColumnChange(index, e.target.value);
@@ -171,7 +186,7 @@ const BoardForm = ({ onClose, mode }: BoardFormProps) => {
         <Button
           type="submit"
           className="w-full mt-6"
-          label="Create New Board"
+          label={mode === "edit" ? "Save Changes" : "Create New Board"}
         />
       </form>
     </div>

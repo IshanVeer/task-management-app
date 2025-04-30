@@ -14,6 +14,7 @@ export interface ColumnsProps {
 }
 
 export interface BoardProps {
+  id: number;
   name: string;
   columns: ColumnsProps[];
 }
