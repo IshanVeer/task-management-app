@@ -72,7 +72,12 @@ const Navbar = ({ setModalType }: Navbarprops) => {
                 </MenubarItem>
               ))}
 
-              <button className="flex mt-4 mb-8 gap-4 cursor-pointer text-primary-500 items-center">
+              <button
+                onClick={() => {
+                  setModalType("add-board");
+                }}
+                className="flex mt-4 mb-8 gap-4 cursor-pointer text-primary-500 items-center"
+              >
                 <img src="/icons/icon-board-button.svg" alt="icon button" />
                 <p>+ Create New Board</p>
               </button>
@@ -93,6 +98,9 @@ const Navbar = ({ setModalType }: Navbarprops) => {
           </div>
           <div className="md:hidden">
             <button
+              onClick={() => {
+                setModalType("add-task");
+              }}
               className="py-4 px-6 disabled:bg-primary-700 disabled:cursor-not-allowed cursor-pointer transition duration-150 rounded-4xl base-bold button-primary"
               disabled={selectedBoardData?.columns?.length === 0}
             >
