@@ -10,19 +10,15 @@ import {
 } from "@/components/ui/menubar";
 import Theme from "./Theme";
 import { ModalTypes } from "@/types";
+import { useBoardContext } from "@/context/BoardProvider";
 
 interface Navbarprops {
-  selectedBoard: string;
-  setSelectedBoard: (board: string) => void;
   setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
-const Navbar = ({
-  selectedBoard,
-  setSelectedBoard,
-  setModalType,
-}: Navbarprops) => {
+const Navbar = ({ setModalType }: Navbarprops) => {
   const { mode } = useTheme();
+  const { selectedBoard, setSelectedBoard } = useBoardContext();
   const selectedBoardData = data.boards.find(
     (board) => board.name === selectedBoard
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import LeftSidebar from "./components/shared/LeftSidebar";
 import Navbar from "./components/shared/Navbar";
@@ -7,19 +7,17 @@ import Board from "./components/shared/Board";
 import BoardForm from "./components/forms/BoardForm";
 import Modal from "./components/ui/Modal";
 import TaskForm from "./components/forms/TaskForm";
-import { onValue, ref } from "firebase/database";
-import { database } from "./firebase";
-import { BoardProps, TasksProps } from "./types";
+
+import { TasksProps } from "./types";
 
 import DeleteBoard from "./components/shared/DeleteBoard";
 import TaskDetails from "./components/shared/TaskDetails";
 import DeleteTask from "./components/shared/DeleteTask";
+import BoardProvider from "./context/BoardProvider";
 
 function App() {
-  const [boards, setBoards] = useState<BoardProps[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedTask, setSelectedTask] = useState<TasksProps | null>(null);
-  const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
+
   const [showSidebar, setShowSidebar] = useState(true);
   const [modalType, setModalType] = useState<
     | "add-board"
@@ -31,115 +29,64 @@ function App() {
     | null
   >(null);
 
-  // fetch board data
-  useEffect(() => {
-    //create reference to your boards location in your firebase
-    const boardsRef = ref(database, "boards");
-    // listen to real time data
-    const unsubscribe = onValue(
-      boardsRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          // we get board data as raw value from snapshot
-          const boardData = snapshot.val();
-          // turn that raw value in array
-          const boardArray = Object.keys(boardData).map((key) => ({
-            id: key,
-            ...boardData[key],
-          }));
-          setBoards(boardArray);
-
-          // if no board is selected choose the 1st board
-
-          if (!selectedBoard && boardArray.length > 0) {
-            setSelectedBoard(boardArray[0] || boardArray[0].id);
-          }
-        } else {
-          setBoards([]);
-        }
-        setLoading(false);
-      },
-      (error) => {
-        console.log("Error fetching boads", error);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [selectedBoard]);
-
   return (
     <>
       <ThemeProvider>
-        {/* isOpen === true and modalType !==null */}
-        <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
-          {modalType === "add-board" && (
-            <BoardForm mode="create" onClose={() => setModalType(null)} />
-          )}
-          {modalType === "edit-board" && (
-            <BoardForm
-              board={boards.find((board) => board.name === selectedBoard)}
-              mode="edit"
-              onClose={() => setModalType(null)}
-            />
-          )}
-          {modalType === "add-task" && <TaskForm />}
-          {modalType === "delete-board" && (
-            <DeleteBoard
-              selectedBoard={selectedBoard}
-              onClose={() => setModalType(null)}
-            />
-          )}
-          {modalType === "task-details" && (
-            <TaskDetails
-              board={boards.find((board) => board.name === selectedBoard)!}
-              task={selectedTask}
-              setModalType={setModalType}
-            />
-          )}
-          {modalType === "delete-task" && (
-            <DeleteTask
-              selectedTask={selectedTask}
-              onClose={() => setModalType(null)}
-            />
-          )}
-        </Modal>
-
-        <div className=" background-light800_dark300">
-          <Navbar
-            setSelectedBoard={setSelectedBoard}
-            selectedBoard={selectedBoard}
-            setModalType={setModalType}
-          />
-
-          <div className="flex">
-            {showSidebar ? (
-              <LeftSidebar
-                boards={boards}
-                selectedBoard={selectedBoard}
-                setSelectedBoard={setSelectedBoard}
-                setShowSidebar={setShowSidebar}
-                setModalType={setModalType}
-              />
-            ) : (
-              <div className="bg-primary-500 px-6 py-4 rounded-r-[50%] fixed bottom-12 self-start ">
-                <button
-                  className="cursor-pointer"
-                  onClick={() => setShowSidebar(true)}
-                >
-                  <img src="/icons/icon-show-sidebar.svg" alt="show-sidebar" />
-                </button>
-              </div>
+        <BoardProvider>
+          {/* isOpen === true and modalType !==null */}
+          <Modal isOpen={modalType !== null} onClose={() => setModalType(null)}>
+            {modalType === "add-board" && (
+              <BoardForm mode="create" onClose={() => setModalType(null)} />
             )}
-            <section className="flex-1 h-screen overflow-x-auto w-full  border-l border-light">
-              <Board
-                setModalType={setModalType}
-                setSelectedTask={setSelectedTask}
-                boards={boards}
-                selectedBoard={selectedBoard}
+            {modalType === "edit-board" && (
+              <BoardForm mode="edit" onClose={() => setModalType(null)} />
+            )}
+            {modalType === "add-task" && <TaskForm />}
+            {modalType === "delete-board" && (
+              <DeleteBoard onClose={() => setModalType(null)} />
+            )}
+            {modalType === "task-details" && (
+              <TaskDetails task={selectedTask} setModalType={setModalType} />
+            )}
+            {modalType === "delete-task" && (
+              <DeleteTask
+                selectedTask={selectedTask}
+                onClose={() => setModalType(null)}
               />
-            </section>
+            )}
+          </Modal>
+
+          <div className=" background-light800_dark300">
+            <Navbar setModalType={setModalType} />
+
+            <div className="flex">
+              {showSidebar ? (
+                <LeftSidebar
+                  setShowSidebar={setShowSidebar}
+                  setModalType={setModalType}
+                />
+              ) : (
+                <div className="bg-primary-500 px-6 py-4 rounded-r-[50%] fixed bottom-12 self-start ">
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => setShowSidebar(true)}
+                  >
+                    <img
+                      src="/icons/icon-show-sidebar.svg"
+                      alt="show-sidebar"
+                    />
+                  </button>
+                </div>
+              )}
+              <section className="flex-1 h-screen overflow-x-auto w-full  border-l border-light">
+                <Board
+                  setModalType={setModalType}
+                  setSelectedTask={setSelectedTask}
+                />
+              </section>
+            </div>
           </div>
-        </div>
+        </BoardProvider>
       </ThemeProvider>
     </>
   );

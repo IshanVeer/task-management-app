@@ -1,25 +1,17 @@
 import { ModalTypes } from "@/types";
 import Theme from "./Theme";
-
-interface BoardsProps {
-  name: string;
-}
+import { useBoardContext } from "@/context/BoardProvider";
 
 interface SetSelectedBoardTypes {
-  setSelectedBoard: (board: string) => void;
-  boards: BoardsProps[];
-  selectedBoard: string;
   setShowSidebar: (show: boolean) => void;
   setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
 const LeftSidebar = ({
-  setSelectedBoard,
-  selectedBoard,
   setShowSidebar,
   setModalType,
-  boards,
 }: SetSelectedBoardTypes) => {
+  const { setSelectedBoard, boards, selectedBoard } = useBoardContext();
   return (
     <div className=" max-sm:hidden  w-[300px] flex flex-col justify-between px-8 py-4   base-bold text-light-600  background-light900_dark400 ">
       {/* boards */}

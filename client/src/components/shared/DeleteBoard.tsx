@@ -1,10 +1,11 @@
 import React from "react";
 import Button from "../ui/Button";
+import { useBoardContext } from "@/context/BoardProvider";
 interface DeleteBoardProps {
   onClose: () => void;
-  selectedBoard: string;
 }
-const DeleteBoard = ({ onClose, selectedBoard }: DeleteBoardProps) => {
+const DeleteBoard = ({ onClose }: DeleteBoardProps) => {
+  const { selectedBoard } = useBoardContext();
   return (
     <div>
       <h2 className="h2-bold mb-4 text-red-500">Delete this board?</h2>

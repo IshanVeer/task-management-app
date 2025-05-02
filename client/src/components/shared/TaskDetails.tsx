@@ -1,5 +1,3 @@
-import { BoardProps, ModalTypes, TasksProps } from "@/types";
-
 import {
   Select,
   SelectContent,
@@ -14,14 +12,19 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@radix-ui/react-menubar";
+import { useBoardContext } from "@/context/BoardProvider";
+import { TasksProps, ModalTypes } from "@/types";
 
 interface TaskDetailsProps {
   task?: TasksProps | null;
-  board: BoardProps;
+
   setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
-const TaskDetails = ({ task, board, setModalType }: TaskDetailsProps) => {
+const TaskDetails = ({ task, setModalType }: TaskDetailsProps) => {
+  const { boards, selectedBoard } = useBoardContext();
+
+  const board = boards.find((board) => board.name === selectedBoard);
   if (!task || !board) return null;
   return (
     <div>

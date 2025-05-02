@@ -4,20 +4,22 @@ import React, { useState, useEffect } from "react";
 import Button from "../ui/Button";
 import { push, ref, set } from "firebase/database";
 import { database } from "@/firebase";
-import { BoardProps } from "@/types";
+
+import { useBoardContext } from "@/context/BoardProvider";
 
 interface BoardFormProps {
-  board?: BoardProps;
   onClose: () => void;
   mode: "create" | "edit";
 }
 
-const BoardForm = ({ onClose, mode, board }: BoardFormProps) => {
+const BoardForm = ({ onClose, mode }: BoardFormProps) => {
   const [boardName, setBoardName] = useState("");
   const [boardNameError, setBoardNameError] = useState(false);
   const [columnInputError, setColumnInputError] = useState<boolean[]>([]);
   const [columns, setColumns] = useState(["Todo"]);
-  console.log(board, "selected board");
+  const { boards, selectedBoard } = useBoardContext();
+
+  const board = boards.find((board) => board.name === selectedBoard);
 
   // pre fill the form incase of edit form
 

@@ -1,21 +1,16 @@
-import { BoardProps, ModalTypes, TasksProps } from "@/types";
-
 import NoColumnPage from "./NoColumnPage";
 import Column from "./Column";
+import { useBoardContext } from "@/context/BoardProvider";
+import { TasksProps, ModalTypes } from "@/types";
 
 interface Props {
-  boards: BoardProps[];
   setSelectedTask: React.Dispatch<React.SetStateAction<TasksProps | null>>;
-  selectedBoard: string;
+
   setModalType: React.Dispatch<React.SetStateAction<ModalTypes>>;
 }
 
-const Board = ({
-  selectedBoard,
-  boards,
-  setModalType,
-  setSelectedTask,
-}: Props) => {
+const Board = ({ setModalType, setSelectedTask }: Props) => {
+  const { selectedBoard, boards } = useBoardContext();
   const selectedBoardData = boards.find(
     (board) => board.name === selectedBoard
   );
