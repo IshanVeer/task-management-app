@@ -1,6 +1,6 @@
 import Button from "../ui/Button";
 import { useTheme } from "@/context/ThemeProvider";
-import { data } from "@/constants";
+
 import {
   Menubar,
   MenubarContent,
@@ -18,10 +18,11 @@ interface Navbarprops {
 
 const Navbar = ({ setModalType }: Navbarprops) => {
   const { mode } = useTheme();
-  const { selectedBoard, setSelectedBoard } = useBoardContext();
-  const selectedBoardData = data.boards.find(
+  const { boards, selectedBoard, setSelectedBoard } = useBoardContext();
+  const selectedBoardData = boards.find(
     (board) => board.name === selectedBoard
   );
+
   return (
     <div className="flex sticky top-0 left-0 background-light900_dark400 justify-between items-center">
       {/* container left */}
@@ -48,7 +49,7 @@ const Navbar = ({ setModalType }: Navbarprops) => {
             </MenubarTrigger>
             <MenubarContent className="relative sm:hidden  p-6  base-bold text-light-600 top-8 w-[264px]">
               <p className="mb-4">ALL BOARDS (3)</p>
-              {data.boards.map((board) => (
+              {boards.map((board) => (
                 <MenubarItem
                   className={`${
                     selectedBoard === board.name

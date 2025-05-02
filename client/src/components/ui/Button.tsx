@@ -2,8 +2,10 @@ import React from "react";
 
 interface ButtonProps {
   buttonType?: string;
+
   onClick?: () => void;
   onClose?: () => void;
+
   type: "button" | "submit" | "reset";
   label: string;
   modalToOpen?: "add-board" | "add-task" | "delete-event";
@@ -15,12 +17,14 @@ interface ButtonProps {
 
 const Button = ({
   buttonType,
+
   label,
   disabled,
   className,
   onClick,
   onClose,
   openModal,
+
   type,
   onChange,
 }: ButtonProps) => {
