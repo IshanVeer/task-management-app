@@ -23,39 +23,41 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   // fetch board data
   useEffect(() => {
-    //create reference to your boards location in your firebase
     const boardsRef = ref(database, "boards");
-    // listen to real time data
+
     const unsubscribe = onValue(
       boardsRef,
       (snapshot) => {
         if (snapshot.exists()) {
-          // we get board data as raw value from snapshot
           const boardData = snapshot.val();
-          // turn that raw value in array
           const boardArray = Object.keys(boardData).map((key) => ({
             id: key,
             ...boardData[key],
           }));
           setBoards(boardArray);
 
-          // if no board is selected choose the 1st board
-
-          if (!selectedBoard && boardArray.length > 0) {
-            setSelectedBoard(boardArray[0] || boardArray[0].id);
-          }
+          // Set selectedBoard only if it's not already set
+          setSelectedBoard((prevSelected) => {
+            const isValid =
+              boardArray.find((b) => b.name === prevSelected) !== undefined;
+            return isValid
+              ? prevSelected
+              : boardArray.length > 0
+              ? boardArray[0].name
+              : "";
+          });
         } else {
           setBoards([]);
         }
         setLoading(false);
       },
       (error) => {
-        console.log("Error fetching boads", error);
+        console.log("Error fetching boards", error);
       }
     );
 
     return () => unsubscribe();
-  }, [selectedBoard]);
+  }, []);
 
   return (
     <BoardContext.Provider
