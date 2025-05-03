@@ -21,6 +21,8 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
 
+  // get ids for columns, tasks, subtasks
+
   // fetch board data
   useEffect(() => {
     const boardsRef = ref(database, "boards");

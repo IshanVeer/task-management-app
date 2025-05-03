@@ -1,9 +1,6 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import { useBoardContext } from "@/context/BoardProvider";
-import { ref } from "firebase/database";
-import { database } from "@/firebase";
-import Board from "../shared/Board";
 import {
   Select,
   SelectContent,
@@ -12,29 +9,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const TaskForm = () => {
+interface TaskFormProps {
+  onClose: () => void;
+}
+
+const TaskForm = ({ onClose }: TaskFormProps) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const { boards, selectedBoard } = useBoardContext();
 
+  //TODO- get selected column using name
+
   const board = boards.find((board) => board.name === selectedBoard);
-  const column = board?.columns.find((column) => column.name);
-  console.log(board);
 
-  const taskFormSubmitHandler = (event) => {
+  const taskFormSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    //TODO- add error handling
 
-    const updatedTask = {
-      title: taskName,
-      description: taskDescription,
-    };
+    //TODO- update task and add task name, description and subtasks
 
-    try {
-      const taskRef = ref(
-        database,
-        `board/${board}/${board?.columns}/${board?.columns?.tasks?.task?.id}`
-      );
-    } catch (error) {}
+    //TODO- push the tasks to path /boards/boardId/columns/columnId/tasks
+
+    onClose();
   };
 
   return (
