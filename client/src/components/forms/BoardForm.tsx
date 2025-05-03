@@ -26,7 +26,11 @@ const BoardForm = ({ onClose, mode }: BoardFormProps) => {
   useEffect(() => {
     if (mode === "edit" && board) {
       setBoardName(board.name);
-      setColumns(board.columns.map((col) => col.name));
+      if (Array.isArray(board.columns)) {
+        setColumns(board?.columns.map((col) => col.name));
+      } else {
+        setColumns([]);
+      }
     }
   }, [mode, board]);
 

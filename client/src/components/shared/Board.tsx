@@ -15,10 +15,10 @@ const Board = ({ setModalType, setSelectedTask }: Props) => {
     (board) => board.name === selectedBoard
   );
 
-  if (!selectedBoardData || selectedBoardData?.columns?.length === 0) {
+  if (!selectedBoardData || !selectedBoardData?.columns) {
     return (
       <div>
-        <NoColumnPage />
+        <NoColumnPage setModalType={setModalType} />
       </div>
     );
   }

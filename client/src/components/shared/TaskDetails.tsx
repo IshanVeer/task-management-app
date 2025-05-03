@@ -56,7 +56,10 @@ const TaskDetails = ({ task, setModalType }: TaskDetailsProps) => {
       } of${task.subtasks.length})`}</p>
 
       {task.subtasks.map((subtask) => (
-        <div className="flex hover:bg-primary-500/40 dark:hover:bg-primary-500/40 transition-all duration-150  body-bold items-center gap-4 p-4 my-3 rounded-sm background-light800_dark300">
+        <div
+          key={subtask.title}
+          className="flex hover:bg-primary-500/40 dark:hover:bg-primary-500/40 transition-all duration-150  body-bold items-center gap-4 p-4 my-3 rounded-sm background-light800_dark300"
+        >
           <input
             className="w-4 h-4 cursor-pointer peer bg-light-900  border-0 border-light-500 rounded-xs checked:accent-primary-500 checked:border-transparent focus:outline-none"
             id={subtask.title}
