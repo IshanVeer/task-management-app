@@ -21,8 +21,6 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [selectedBoard, setSelectedBoard] = useState("Platform Launch");
 
-  // get ids for columns, tasks, subtasks
-
   // fetch board data
   useEffect(() => {
     const boardsRef = ref(database, "boards");
@@ -32,10 +30,48 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
       (snapshot) => {
         if (snapshot.exists()) {
           const boardData = snapshot.val();
-          const boardArray = Object.keys(boardData).map((key) => ({
-            id: key,
-            ...boardData[key],
-          }));
+
+          const boardArray = Object.keys(boardData).map((boardId) => {
+            const board = boardData[boardId];
+
+            const columns = board.columns
+              ? Object.keys(board.columns).map((columnId) => {
+                  const column = board.columns[columnId];
+
+                  const tasks = column.tasks
+                    ? Object.keys(column.tasks).map((taskId) => {
+                        const task = column.tasks[taskId];
+
+                        const subtasks = task.subtasks
+                          ? Object.keys(task.subtasks).map((subtaskId) => ({
+                              id: subtaskId,
+                              ...task.subtasks[subtaskId],
+                            }))
+                          : [];
+
+                        return {
+                          id: taskId,
+                          ...task,
+                          subtasks,
+                        };
+                      })
+                    : [];
+
+                  return {
+                    id: columnId,
+                    ...column,
+                    tasks,
+                  };
+                })
+              : [];
+
+            return {
+              id: boardId,
+              name: board.name,
+              columns,
+            };
+          });
+
           setBoards(boardArray);
 
           // Set selectedBoard only if it's not already set

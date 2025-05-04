@@ -17,10 +17,16 @@ const TaskForm = ({ onClose }: TaskFormProps) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const { boards, selectedBoard } = useBoardContext();
+  const [selectedColumn, setSelectedColumn] = useState("");
 
   //TODO- get selected column using name
 
   const board = boards.find((board) => board.name === selectedBoard);
+  const column = board?.columns.find(
+    (column) => column.name === selectedColumn
+  );
+
+  console.log(column, "column data");
 
   const taskFormSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -102,13 +108,13 @@ const TaskForm = ({ onClose }: TaskFormProps) => {
             Current Status
           </p>
 
-          <Select>
+          <Select onValueChange={setSelectedColumn}>
             <SelectTrigger className="w-full p-4 paragraph-medium">
               <SelectValue placeholder="todo" />
             </SelectTrigger>
             <SelectContent>
               {board?.columns.map((column) => (
-                <SelectItem key={column.name} value={column.name}>
+                <SelectItem key={column.id} value={column.name}>
                   {column.name}
                 </SelectItem>
               ))}
