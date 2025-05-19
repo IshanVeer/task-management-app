@@ -8,8 +8,8 @@ const Navbar = () => {
         <img src="/icons/logo-dark.svg" alt="logo" />
       </div>
       {/* Board heading container */}
-      <div className="flex flex-1 border-l border-b h-full items-center justify-between">
-        <h1 className="h1-bold px-4">Platform Launch</h1>
+      <div className="flex flex-1 border-l h-full items-center justify-between">
+        <h1 className="h1-bold px-6">Platform Launch</h1>
         <div className="flex items-center gap-4 ">
           <Button />
           <button className="cursor-pointer">

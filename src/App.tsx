@@ -7,10 +7,12 @@ function App() {
   return (
     <>
       <Navbar />
-      {/* <div className="flex">
+      <div className="flex">
         <LeftSidebar />
-        <Board />
-      </div> */}
+        <section className="border-t border-r flex-1">
+          <Board />
+        </section>
+      </div>
     </>
   );
 }
