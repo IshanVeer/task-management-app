@@ -52,6 +52,12 @@
   .background-light800_dark300 {
     @apply bg-light-800 dark:bg-dark-300;
   }
+  .background-light900_dark400 {
+    @apply bg-light-900 dark:bg-dark-400;
+  }
+  .background-light900_dark300 {
+    @apply bg-light-900 dark:bg-dark-300;
+  }
   .background-light800_darkCustom {
     @apply bg-light-800 dark:bg-[#1f202b];
   }
@@ -59,12 +65,7 @@
   .border-light {
     @apply border-light-700 dark:border-light-600;
   }
-  .background-light900_dark400 {
-    @apply bg-light-900 dark:bg-dark-400;
-  }
-  .background-light900_dark300 {
-    @apply bg-light-900 dark:bg-dark-300;
-  }
+
   .light-gradient {
     background: linear-gradient(
       180deg,

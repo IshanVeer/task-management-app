@@ -1,8 +1,40 @@
-import React from "react";
+"use client";
+import { useTheme } from "@/context/ThemeProvider";
+import { boardData } from "../../constants/index";
+import { Switch } from "@/components/ui/switch";
 
 const LeftSidebar = () => {
+  const { mode, themeToggleHandler } = useTheme();
   return (
-    <div className="h-[100vh] ml-[33px] border-r w-[300px]">Left side bar</div>
+    <div className="h-[100vh] flex flex-col justify-between ml-[33px] pr-[33px] pb-8  border-r w-[300px]">
+      <ul>
+        {boardData.boards.map((board) => (
+          <li key={board.name} className="">
+            {board.name}
+          </li>
+        ))}
+      </ul>
+      <div>
+        <div className="flex justify-center gap-6 py-4 rounded-sm background-light800_darkCustom w-full">
+          <img
+            src="../../../public/icons/icon-light-theme.svg"
+            alt="light"
+            className="object-contain"
+          />
+
+          <Switch
+            checked={mode === "dark"}
+            onCheckedChange={themeToggleHandler}
+          />
+
+          <img
+            src="../../../public/icons/icon-dark-theme.svg"
+            alt="dark"
+            className="object-contain"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
