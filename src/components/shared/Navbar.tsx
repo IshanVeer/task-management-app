@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 const Navbar = () => {
   const { mode } = useTheme();
   return (
-    <div className="flex items-center px-8 h-24  w-full">
+    <div className="flex background-light900_dark300 items-center px-8 h-24  w-full">
       {/* logo container */}
       <div className="w-[300px] ">
         {mode === "dark" ? (

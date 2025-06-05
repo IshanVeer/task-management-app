@@ -13,7 +13,7 @@ function App() {
           <Navbar />
           <div className="flex">
             <LeftSidebar />
-            <section className="border-t border-r flex-1">
+            <section className="border-t background-light800_darkCustom  border-r flex-1">
               <Board />
             </section>
           </div>
