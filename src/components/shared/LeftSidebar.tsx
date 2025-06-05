@@ -1,10 +1,12 @@
 "use client";
 import { useTheme } from "@/context/ThemeProvider";
-import { boardData } from "../../constants/index";
+
 import { Switch } from "@/components/ui/switch";
+import { useBoardData } from "@/context/BoardProvider";
 
 const LeftSidebar = () => {
   const { mode, themeToggleHandler } = useTheme();
+  const { boardData } = useBoardData();
   return (
     <div className="h-[100vh] flex flex-col justify-between ml-[33px] pr-[33px] pb-8  border-r w-[300px]">
       <ul>
