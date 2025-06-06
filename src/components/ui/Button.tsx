@@ -2,9 +2,10 @@ import React from "react";
 
 interface ButtonProps {
   type?: string;
+  label: string;
 }
 
-const Button = ({ type }: ButtonProps) => {
+const Button = ({ type, label }: ButtonProps) => {
   return (
     <div>
       <div
@@ -16,7 +17,7 @@ const Button = ({ type }: ButtonProps) => {
             : "button-primary"
         }`}
       >
-        Button primary
+        {label}
       </div>
     </div>
   );

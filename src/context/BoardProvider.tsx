@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState } from "react";
 import { initialBoardData } from "@/constants";
-import type { BoardDataProps } from "@/types";
+import type { BoardDataProps, BoardProps } from "@/types";
 
 interface BoardContextType {
   boardData: BoardDataProps;
   setBoardData: React.Dispatch<React.SetStateAction<BoardDataProps>>;
-  activeBoard: number;
-  setActiveBoard: React.Dispatch<React.SetStateAction<number>>;
+  activeBoard: string;
+  setActiveBoard: React.Dispatch<React.SetStateAction<string>>;
+  selectedBoard: BoardProps | undefined;
 }
 
 // create board context
@@ -15,13 +16,18 @@ const BoardContext = createContext<BoardContextType | undefined>(undefined);
 const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   // useState to move data to state
   const [boardData, setBoardData] = useState(initialBoardData);
-  const [activeBoard, setActiveBoard] = useState(0);
+  const [activeBoard, setActiveBoard] = useState("1");
+
+  const selectedBoard = boardData.boards.find(
+    (board) => board.id === activeBoard
+  );
 
   const value = {
     boardData,
     setBoardData,
     activeBoard,
     setActiveBoard,
+    selectedBoard,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

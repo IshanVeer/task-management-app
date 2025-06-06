@@ -14,6 +14,7 @@ export interface ColumnProps {
   tasks: Task[];
 }
 export interface BoardProps {
+  id: string;
   name: string;
   columns: Column[];
 }

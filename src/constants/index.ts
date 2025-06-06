@@ -1,6 +1,7 @@
 export const initialBoardData = {
   boards: [
     {
+      id: "1",
       name: "Platform Launch",
       columns: [
         {
@@ -295,6 +296,7 @@ export const initialBoardData = {
       ],
     },
     {
+      id: "2",
       name: "Marketing Plan",
       columns: [
         {
@@ -386,6 +388,7 @@ export const initialBoardData = {
       ],
     },
     {
+      id: "3",
       name: "Roadmap",
       columns: [
         {

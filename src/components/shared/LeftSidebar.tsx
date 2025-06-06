@@ -8,10 +8,6 @@ const LeftSidebar = () => {
   const { mode, themeToggleHandler } = useTheme();
   const { boardData, activeBoard, setActiveBoard } = useBoardData();
 
-  const selectedBoard = boardData.boards[activeBoard];
-
-  console.log(selectedBoard, "selected board");
-
   console.log(activeBoard, "active board");
 
   return (
@@ -22,19 +18,19 @@ const LeftSidebar = () => {
             All boards ({boardData.boards.length})
           </p>
           <ul>
-            {boardData.boards.map((board, index) => (
+            {boardData.boards.map((board) => (
               <li
                 key={board.name}
-                onClick={() => setActiveBoard(index)}
+                onClick={() => setActiveBoard(board.id)}
                 className={`flex text-light-600 items-center gap-4 base-bold p-4 pl-8  -ml-[33px] rounded-r-3xl transition duration-150 cursor-pointer ${
-                  activeBoard === index
+                  activeBoard === board.id
                     ? "bg-primary-500 text-white"
                     : "hover:bg-primary-500/10 dark:hover:bg-white hover:text-primary-500"
                 }`}
               >
                 <img
                   className={`${
-                    activeBoard === index ? "brightness-0 invert" : ""
+                    activeBoard === board.id ? "brightness-0 invert" : ""
                   }`}
                   src="/icons/icon-board.svg"
                   alt="board"
@@ -66,6 +62,10 @@ const LeftSidebar = () => {
               className="object-contain"
             />
           </div>
+          <button className="flex w-full items-center gap-4 py-4 cursor-pointer  base-bold text-light-600">
+            <img src="/icons/icon-hide-sidebar.svg" />
+            <p>Hide Sidebar</p>
+          </button>
         </div>
       </div>
     </div>
