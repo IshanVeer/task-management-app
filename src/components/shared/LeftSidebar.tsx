@@ -12,15 +12,19 @@ const LeftSidebar = () => {
       <div className="h-[100vh]  flex flex-col justify-between pr-[33px] pb-8  border-r w-[300px]">
         <ul>
           {boardData.boards.map((board) => (
-            <li key={board.name} className="">
+            <li
+              key={board.name}
+              className="flex text-light-600 items-center gap-4 base-bold p-4 pl-8 hover:bg-primary-500/10 hover:text-primary-500 -ml-[33px] rounded-r-3xl transition duration-150 cursor-pointer"
+            >
+              <img src="/icons/icon-board.svg" alt="board" />
               {board.name}
             </li>
           ))}
         </ul>
         <div>
-          <div className="flex justify-center gap-6 py-4 rounded-sm background-light800_darkCustom w-full">
+          <div className="flex justify-center gap-6 items-center py-4 rounded-sm background-light800_darkCustom w-full">
             <img
-              src="../../../public/icons/icon-light-theme.svg"
+              src="/icons/icon-light-theme.svg"
               alt="light"
               className="object-contain"
             />
@@ -31,7 +35,7 @@ const LeftSidebar = () => {
             />
 
             <img
-              src="../../../public/icons/icon-dark-theme.svg"
+              src="/icons/icon-dark-theme.svg"
               alt="dark"
               className="object-contain"
             />
