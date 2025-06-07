@@ -5,19 +5,22 @@ export interface SubTaskProps {
 
 export interface TaskProps {
   title: string;
-  descrptions: string;
+  description: string;
   status: string;
-  subtasks: SubTask[];
+  subtasks: SubTaskProps[];
 }
+
 export interface ColumnProps {
   name: string;
-  tasks: Task[];
+  tasks: TaskProps[];
 }
+
 export interface BoardProps {
   id: string;
   name: string;
-  columns: Column[];
+  columns: ColumnProps[];
 }
+
 export interface BoardDataProps {
-  boards: Board[];
+  boards: BoardProps[];
 }
