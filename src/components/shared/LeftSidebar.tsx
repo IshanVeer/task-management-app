@@ -18,7 +18,7 @@ const LeftSidebar = ({ hideSidebarHandler, showSidebar }: LeftSidebarProps) => {
     <>
       {showSidebar && (
         <div className="pl-[33px] background-light900_dark300">
-          <div className="h-[100vh]  flex flex-col justify-between pr-[33px] pb-8  border-r w-[300px]">
+          <div className="h-full flex flex-col justify-between pr-[33px] pb-8  border-r w-[300px]">
             <div className="py-4">
               <p className="uppercase h5-bold pb-4 text-light-600">
                 All boards ({boardData.boards.length})

@@ -11,8 +11,8 @@ const Board = ({ showSidebar, showSideBarHandler }: Props) => {
   const { selectedBoard } = useBoardData();
 
   return (
-    <div className="h-[100vh] p-4 relative">
-      <div className="flex items-center justify-between">
+    <div className="h-full p-4 relative">
+      <div className="flex items-start gap-4 justify-between">
         {selectedBoard?.columns.map((column) => (
           <Column key={column.name} column={column} />
         ))}
