@@ -22,7 +22,7 @@ const Column = ({ column }: Props) => {
           <p>({column.tasks.length})</p>
         </div>
         {/* task card */}
-        <div className="">
+        <div>
           {column.tasks.map((task) => (
             <TaskCard key={task.title} task={task} />
           ))}
