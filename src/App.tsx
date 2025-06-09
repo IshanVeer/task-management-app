@@ -25,7 +25,7 @@ function App() {
               showSidebar={showSidebar}
               hideSidebarHandler={hideSidebarHandler}
             />
-            <section className="border-t background-light800_darkCustom  border-r flex-1">
+            <section className="border-t background-light800_darkCustom overflow-x-auto  border-r flex-1">
               <Board
                 showSidebar={showSidebar}
                 showSideBarHandler={showSideBarHandler}

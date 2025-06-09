@@ -14,10 +14,17 @@ const Board = ({ showSidebar, showSideBarHandler }: Props) => {
   return (
     <div className="min-h-screen p-5 relative">
       {selectedBoard?.columns && selectedBoard?.columns?.length > 0 ? (
-        <div className="flex items-start gap-5 justify-between">
+        <div className="flex items-start gap-5 w-max">
           {selectedBoard?.columns.map((column) => (
             <Column key={column.name} column={column} />
           ))}
+          <div className="min-w-[280px] rounded-md text-center min-h-screen mt-10 custom-background-light700_dark200">
+            <div className="mt-80">
+              <button className="cursor-pointer h1-bold text-light-600">
+                + New Column
+              </button>
+            </div>
+          </div>
         </div>
       ) : (
         <div className="text-center my-[20%]">

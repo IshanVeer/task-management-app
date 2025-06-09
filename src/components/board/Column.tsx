@@ -12,7 +12,7 @@ const Column = ({ column }: Props) => {
   return (
     <>
       {/* column title */}
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-[280px]">
         <div className="flex text-light-600 body-bold mb-6 items-center gap-2">
           <div
             style={{ backgroundColor: bgColor }}

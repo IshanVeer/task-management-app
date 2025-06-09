@@ -61,6 +61,9 @@
   .background-light800_darkCustom {
     @apply bg-light-800 dark:bg-[#1f202b];
   }
+  .custom-background-light700_dark200 {
+    @apply bg-light-700/50 dark:bg-dark-200;
+  }
 
   .border-light {
     @apply border-light-700 dark:border-light-600;
