@@ -5,6 +5,7 @@ import LeftSidebar from "./components/shared/LeftSidebar";
 import Navbar from "./components/shared/Navbar";
 import BoardProvider from "./context/BoardProvider";
 import ThemeProvider from "./context/ThemeProvider";
+import MobileNavbar from "./components/shared/MobileNavbar";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -20,6 +21,8 @@ function App() {
       <BoardProvider>
         <ThemeProvider>
           <Navbar />
+          <MobileNavbar />
+
           <div className="flex">
             <LeftSidebar
               showSidebar={showSidebar}

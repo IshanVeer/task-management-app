@@ -7,7 +7,7 @@ const Navbar = () => {
   const { selectedBoard } = useBoardData();
 
   return (
-    <div className="flex background-light900_dark300 items-center px-8 h-24  w-full">
+    <div className="flex max-sm:hidden background-light900_dark300 items-center px-8 h-24  w-full">
       {/* logo container */}
       <div className="w-[300px] ">
         {mode === "dark" ? (
