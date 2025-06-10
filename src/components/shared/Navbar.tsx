@@ -9,7 +9,7 @@ const Navbar = () => {
   return (
     <div className="flex max-sm:hidden background-light900_dark300 items-center px-8 h-24  w-full">
       {/* logo container */}
-      <div className="w-[300px] ">
+      <div className="md:w-[300px] w-[260px] ">
         {mode === "dark" ? (
           <img src="/icons/logo-light.svg" alt="logo" />
         ) : (
@@ -18,7 +18,9 @@ const Navbar = () => {
       </div>
       {/* Board heading container */}
       <div className="flex flex-1 border-l h-full items-center justify-between">
-        <h1 className="h1-bold px-6">{selectedBoard?.name}</h1>
+        <h1 className="md:text-2xl font-bold text-[20px] px-6">
+          {selectedBoard?.name}
+        </h1>
         <div className="flex items-center gap-4 ">
           <Button label="+ Add New Task" />
           <button className="cursor-pointer">
