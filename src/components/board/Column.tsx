@@ -1,11 +1,11 @@
 import { randomHexColor } from "@/lib/utils";
-import type { ColumnProps } from "@/types";
+import type { ColumnProps, ModalType } from "@/types";
 import React, { useMemo } from "react";
 import TaskCard from "./TaskCard";
 
 interface Props {
   column: ColumnProps;
-  openModalHandler: () => void;
+  openModalHandler: (modalType: ModalType) => void;
 }
 
 const Column = ({ column, openModalHandler }: Props) => {
