@@ -9,6 +9,8 @@ import TaskForm from "./components/form/TaskForm";
 import { useBoardData } from "./context/BoardProvider";
 import type { ModalType } from "@/types";
 import BoardForm from "./components/form/BoardForm";
+import DeleteEvent from "./components/board/DeleteEvent";
+import TaskDetail from "./components/board/TaskDetail";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -43,6 +45,15 @@ function App() {
 
       case "add-board":
         return <BoardForm />;
+      case "edit-board":
+        return <BoardForm mode="edit" />;
+
+      case "delete-board":
+        return <DeleteEvent />;
+      case "delete-task":
+        return <DeleteEvent />;
+      case "task-detail":
+        return <TaskDetail />;
     }
   };
 
@@ -64,6 +75,7 @@ function App() {
         />
         <section className="border-t background-light800_darkCustom overflow-x-auto  border-r flex-1">
           <Board
+            openModalHandler={openModalHandler}
             showSidebar={showSidebar}
             showSideBarHandler={showSideBarHandler}
           />

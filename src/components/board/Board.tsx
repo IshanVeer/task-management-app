@@ -2,13 +2,19 @@ import { useBoardData } from "@/context/BoardProvider";
 import React from "react";
 import Column from "./Column";
 import Button from "../ui/Button";
+import type { ModalType } from "@/types";
 
 interface Props {
   showSidebar: boolean;
   showSideBarHandler: () => void;
+  openModalHandler: (modalType: ModalType) => void;
 }
 
-const Board = ({ showSidebar, showSideBarHandler }: Props) => {
+const Board = ({
+  showSidebar,
+  showSideBarHandler,
+  openModalHandler,
+}: Props) => {
   const { selectedBoard } = useBoardData();
 
   return (
@@ -16,11 +22,18 @@ const Board = ({ showSidebar, showSideBarHandler }: Props) => {
       {selectedBoard?.columns && selectedBoard?.columns?.length > 0 ? (
         <div className="flex items-start gap-5 w-max">
           {selectedBoard?.columns.map((column) => (
-            <Column key={column.name} column={column} />
+            <Column
+              openModalHandler={openModalHandler}
+              key={column.name}
+              column={column}
+            />
           ))}
           <div className="min-w-[280px] rounded-md text-center min-h-screen mt-10 custom-background-light700_dark200">
             <div className="mt-80">
-              <button className="cursor-pointer h1-bold text-light-600">
+              <button
+                onClick={() => openModalHandler("edit-board")}
+                className="cursor-pointer h1-bold text-light-600"
+              >
                 + New Column
               </button>
             </div>

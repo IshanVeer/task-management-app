@@ -2,6 +2,12 @@ import { useTheme } from "@/context/ThemeProvider";
 import Button from "../ui/Button";
 import { useBoardData } from "@/context/BoardProvider";
 import type { ModalType } from "@/types";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 interface NavbarProps {
   openModalHandler: (modalType: ModalType) => void;
@@ -12,7 +18,7 @@ const Navbar = ({ openModalHandler }: NavbarProps) => {
   const { selectedBoard } = useBoardData();
 
   return (
-    <div className="flex max-sm:hidden background-light900_dark300 items-center px-8 h-24  w-full">
+    <div className="flex max-sm:hidden background-light900_dark300 relative items-center px-8 h-24  w-full">
       {/* logo container */}
       <div className="md:w-[300px] w-[260px] ">
         {mode === "dark" ? (
@@ -31,9 +37,26 @@ const Navbar = ({ openModalHandler }: NavbarProps) => {
             openModalHandler={() => openModalHandler("add-task")}
             label="+ Add New Task"
           />
-          <button className="cursor-pointer">
-            <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
-          </button>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="cursor-pointer">
+              <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="paragraph-medium absolute w-[192px] px-2 py-3 top-0 right-0">
+              <DropdownMenuItem
+                onClick={() => openModalHandler("edit-board")}
+                className="text-light-600 py-2 cursor-pointer"
+              >
+                Edit Board
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => openModalHandler("delete-board")}
+                className="text-red-500 py-2 cursor-pointer"
+              >
+                Delete Board
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </div>

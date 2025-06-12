@@ -30,4 +30,7 @@ export type ModalType =
   | "edit-task"
   | "add-board"
   | "edit-board"
+  | "delete-board"
+  | "delete-task"
+  | "task-detail"
   | null;

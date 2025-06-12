@@ -5,9 +5,10 @@ import TaskCard from "./TaskCard";
 
 interface Props {
   column: ColumnProps;
+  openModalHandler: () => void;
 }
 
-const Column = ({ column }: Props) => {
+const Column = ({ column, openModalHandler }: Props) => {
   const bgColor = useMemo(() => randomHexColor(), []);
   return (
     <>
@@ -24,7 +25,11 @@ const Column = ({ column }: Props) => {
         {/* task card */}
         <div>
           {column.tasks.map((task) => (
-            <TaskCard key={task.title} task={task} />
+            <TaskCard
+              openModalHandler={openModalHandler}
+              key={task.title}
+              task={task}
+            />
           ))}
         </div>
       </div>
