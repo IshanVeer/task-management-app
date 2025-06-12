@@ -6,6 +6,8 @@ import Navbar from "./components/shared/Navbar";
 import BoardProvider from "./context/BoardProvider";
 import ThemeProvider from "./context/ThemeProvider";
 import MobileNavbar from "./components/shared/MobileNavbar";
+import Modal from "./components/ui/Modal";
+import TaskForm from "./components/form/TaskForm";
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(true);
@@ -20,6 +22,9 @@ function App() {
     <>
       <BoardProvider>
         <ThemeProvider>
+          <Modal>
+            <TaskForm />
+          </Modal>
           <Navbar />
           <MobileNavbar />
 
