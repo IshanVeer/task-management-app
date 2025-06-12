@@ -24,3 +24,10 @@ export interface BoardProps {
 export interface BoardDataProps {
   boards: BoardProps[];
 }
+
+export type ModalType =
+  | "add-task"
+  | "edit-task"
+  | "add-board"
+  | "edit-board"
+  | null;

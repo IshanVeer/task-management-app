@@ -1,19 +1,26 @@
-import React from "react";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { BoardProps } from "@/types";
 
-const TaskForm = () => {
+interface Props {
+  selectedBoard: BoardProps;
+  mode?: string;
+}
+
+const TaskForm = ({ selectedBoard, mode }: Props) => {
   return (
     <Card>
-      <h2 className="h2-bold">Add New Task</h2>
+      {mode === "edit" ? (
+        <h2 className="h2-bold">Edit Task</h2>
+      ) : (
+        <h2 className="h2-bold">Add New Task</h2>
+      )}
 
       <form className="py-4" action="submit">
         {/* title input */}
@@ -66,13 +73,14 @@ recharge the batteries a little."
           <p className="mb-3 h5-bold text-light-600">Status</p>
           <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
             <p>Todo</p>
-            <img src="/public/icons/icon-chevron-down.svg" alt="dropdown" />
+            <img src="/icons/icon-chevron-down.svg" alt="dropdown" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[440px]">
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            {selectedBoard.columns.map((column) => (
+              <DropdownMenuItem key={column.name}>
+                {column.name}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
         <Button classname="w-full mt-4" label="Create Task" />

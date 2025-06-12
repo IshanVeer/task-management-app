@@ -3,13 +3,19 @@ import { useTheme } from "@/context/ThemeProvider";
 
 import { Switch } from "@/components/ui/switch";
 import { useBoardData } from "@/context/BoardProvider";
+import type { ModalType } from "@/types";
 
 interface LeftSidebarProps {
   showSidebar: boolean;
   hideSidebarHandler: () => void;
+  openModalHandler: (modalType: ModalType) => void;
 }
 
-const LeftSidebar = ({ hideSidebarHandler, showSidebar }: LeftSidebarProps) => {
+const LeftSidebar = ({
+  hideSidebarHandler,
+  showSidebar,
+  openModalHandler,
+}: LeftSidebarProps) => {
   const { mode, themeToggleHandler } = useTheme();
 
   const { boardData, activeBoard, setActiveBoard } = useBoardData();
@@ -45,7 +51,10 @@ const LeftSidebar = ({ hideSidebarHandler, showSidebar }: LeftSidebarProps) => {
                   </li>
                 ))}
               </ul>
-              <button className="flex items-center gap-4 cursor-pointer base-bold text-primary-500 py-4">
+              <button
+                onClick={() => openModalHandler("add-board")}
+                className="flex items-center gap-4 cursor-pointer base-bold text-primary-500 py-4"
+              >
                 <img src="/icons/icon-add-board.svg" />{" "}
                 <p>+ Create New Board</p>
               </button>

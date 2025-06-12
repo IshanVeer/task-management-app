@@ -1,8 +1,13 @@
 import { useTheme } from "@/context/ThemeProvider";
 import Button from "../ui/Button";
 import { useBoardData } from "@/context/BoardProvider";
+import type { ModalType } from "@/types";
 
-const Navbar = () => {
+interface NavbarProps {
+  openModalHandler: (modalType: ModalType) => void;
+}
+
+const Navbar = ({ openModalHandler }: NavbarProps) => {
   const { mode } = useTheme();
   const { selectedBoard } = useBoardData();
 
@@ -22,7 +27,10 @@ const Navbar = () => {
           {selectedBoard?.name}
         </h1>
         <div className="flex items-center gap-4 ">
-          <Button label="+ Add New Task" />
+          <Button
+            openModalHandler={() => openModalHandler("add-task")}
+            label="+ Add New Task"
+          />
           <button className="cursor-pointer">
             <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
           </button>

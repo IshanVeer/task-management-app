@@ -1,15 +1,15 @@
-import React from "react";
-
 interface ButtonProps {
   type?: string;
   label: string;
   classname?: string;
+  openModalHandler?: () => void;
 }
 
-const Button = ({ type, label, classname }: ButtonProps) => {
+const Button = ({ type, label, classname, openModalHandler }: ButtonProps) => {
   return (
     <div>
-      <div
+      <button
+        onClick={openModalHandler}
         className={`${classname} text-center inline-block transition duration-150 cursor-pointer px-6 py-3 text-white base-bold rounded-3xl outline-0 ${
           type === "destructive"
             ? "button-destructive"
@@ -19,7 +19,7 @@ const Button = ({ type, label, classname }: ButtonProps) => {
         }`}
       >
         {label}
-      </div>
+      </button>
     </div>
   );
 };

@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-const Modal = ({ children }: { children: React.ReactNode }) => {
+
+interface ModalProps {
+  children: React.ReactNode;
+  closeModalHandler: () => void;
+}
+const Modal = ({ children, closeModalHandler }: ModalProps) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -10,7 +15,10 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div
+      onClick={closeModalHandler}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+    >
       <div>{children}</div>
     </div>,
     document.getElementById("modal")!
