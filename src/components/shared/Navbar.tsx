@@ -34,6 +34,7 @@ const Navbar = ({ openModalHandler }: NavbarProps) => {
         </h1>
         <div className="flex items-center gap-4 ">
           <Button
+            action="open-modal"
             openModalHandler={() => openModalHandler("add-task")}
             label="+ Add New Task"
           />

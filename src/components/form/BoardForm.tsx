@@ -43,12 +43,17 @@ const BoardForm = ({ mode }: BoardFormProps) => {
             </button>
           </div>
           <Button
+            action="add-column"
             classname="w-full mt-4"
             type="secondary"
             label="+ Add New Column"
           />
         </div>
-        <Button classname="w-full mt-4" label="Create New Board" />
+        <Button
+          action="submit-form"
+          classname="w-full mt-4"
+          label="Create New Board"
+        />
       </form>
     </Card>
   );

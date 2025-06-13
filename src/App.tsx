@@ -58,9 +58,11 @@ function App() {
         return <BoardForm mode="edit" />;
 
       case "delete-board":
-        return <DeleteEvent />;
+        return <DeleteEvent closeModalHandler={closeModalHandler} />;
       case "delete-task":
-        return <DeleteEvent />;
+        return (
+          <DeleteEvent closeModalHandler={closeModalHandler} mode="task" />
+        );
       case "task-detail":
         return selectedTask ? (
           <TaskDetail openModalHandler={openModalHandler} />

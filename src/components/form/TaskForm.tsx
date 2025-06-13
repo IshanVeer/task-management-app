@@ -64,6 +64,7 @@ recharge the batteries a little."
             </button>
           </div>
           <Button
+            action="add-subtask"
             classname="w-full mt-4"
             type="secondary"
             label="+ Add New Subtask"
@@ -83,7 +84,11 @@ recharge the batteries a little."
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button classname="w-full mt-4" label="Create Task" />
+        <Button
+          action="submit-form"
+          classname="w-full mt-4"
+          label="Create Task"
+        />
       </form>
     </Card>
   );
