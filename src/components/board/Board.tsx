@@ -2,12 +2,12 @@ import { useBoardData } from "@/context/BoardProvider";
 import React from "react";
 import Column from "./Column";
 import Button from "../ui/Button";
-import type { ModalType } from "@/types";
+import type { ModalType, TaskProps } from "@/types";
 
 interface Props {
   showSidebar: boolean;
   showSideBarHandler: () => void;
-  openModalHandler: (modalType: ModalType) => void;
+  openModalHandler: (modalType: ModalType, task?: TaskProps) => void;
 }
 
 const Board = ({

@@ -7,7 +7,7 @@ import MobileNavbar from "./components/shared/MobileNavbar";
 import Modal from "./components/ui/Modal";
 import TaskForm from "./components/form/TaskForm";
 import { useBoardData } from "./context/BoardProvider";
-import type { ModalType } from "@/types";
+import type { ModalType, TaskProps } from "@/types";
 import BoardForm from "./components/form/BoardForm";
 import DeleteEvent from "./components/board/DeleteEvent";
 import TaskDetail from "./components/board/TaskDetail";
@@ -15,7 +15,7 @@ import TaskDetail from "./components/board/TaskDetail";
 function App() {
   const [showSidebar, setShowSidebar] = useState(true);
   const [openModal, setOpenModal] = useState<ModalType>(null);
-  const { selectedBoard } = useBoardData();
+  const { selectedBoard, selectedTask, setSelectedTask } = useBoardData();
 
   const hideSidebarHandler = () => {
     setShowSidebar(false);
@@ -24,10 +24,19 @@ function App() {
     setShowSidebar(true);
   };
 
-  const openModalHandler = (modalType: ModalType) => {
+  const openModalHandler = (modalType: ModalType, task?: TaskProps) => {
+    if (modalType === "task-detail") {
+      setSelectedTask(task);
+    }
     setOpenModal(modalType);
   };
-  const closeModalHandler = () => setOpenModal(null);
+  const closeModalHandler = () => {
+    setOpenModal(null);
+
+    if (openModal === "task-detail") {
+      setSelectedTask(undefined);
+    }
+  };
 
   const renderModalContent = () => {
     if (!openModal) return null;
@@ -53,7 +62,9 @@ function App() {
       case "delete-task":
         return <DeleteEvent />;
       case "task-detail":
-        return <TaskDetail />;
+        return selectedTask ? (
+          <TaskDetail openModalHandler={openModalHandler} />
+        ) : null;
     }
   };
 
