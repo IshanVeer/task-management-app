@@ -17,7 +17,7 @@ const TaskCard = ({ task, openModalHandler }: Props) => {
       className="w-full background-light900_dark300 cursor-pointer py-6 px-4 mb-4 rounded-md shadow-md/8"
     >
       <h3 className="base-bold text-dark100_light900 pb-2">{task.title}</h3>
-      <p className="h5-bold text-light-600">{`${completedSubtasks} of${totalSubtasks} subtasks`}</p>
+      <p className="body-bold text-light-600">{`${completedSubtasks} of${totalSubtasks} subtasks`}</p>
     </div>
   );
 };

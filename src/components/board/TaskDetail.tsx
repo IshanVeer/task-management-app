@@ -60,12 +60,12 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
         {selectedTask?.description}
       </p>
 
-      <p className="h5-bold text-light-600">{`Subtasks(${completedSubtasks} of ${totalSubtasks}) `}</p>
+      <p className="body-bold text-light-600">{`Subtasks(${completedSubtasks} of ${totalSubtasks}) `}</p>
 
       <form className="my-5" action="submit">
         {selectedTask?.subtasks.map((subtask) => (
           <div
-            className="flex items-center background-light800_darkCustom p-3 mb-3 rounded-xs h5-bold gap-3"
+            className="flex items-center background-light800_darkCustom p-3 mb-3 rounded-xs body-bold gap-3"
             key={subtask.title}
           >
             <input
@@ -82,7 +82,7 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
         ))}
         <div className="mt-6">
           <DropdownMenu>
-            <p className="mb-3 h5-bold text-light-600">Current Status</p>
+            <p className="mb-3 body-bold text-light-600">Current Status</p>
             <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
               <p>{selectedTask?.status}</p>
               <img src="/icons/icon-chevron-down.svg" alt="dropdown" />

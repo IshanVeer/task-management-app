@@ -26,7 +26,7 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
         {/* title input */}
         <div className="flex flex-col gap-3 mb-6">
           {" "}
-          <label className="h5-bold text-light-600" htmlFor="title">
+          <label className="body-bold text-light-600" htmlFor="title">
             Title
           </label>
           <input
@@ -39,7 +39,7 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
         {/* description input */}
         <div className="flex flex-col gap-3 mb-6">
           {" "}
-          <label className="h5-bold text-light-600" htmlFor="description">
+          <label className="body-bold text-light-600" htmlFor="description">
             Description
           </label>
           <textarea
@@ -51,7 +51,7 @@ recharge the batteries a little."
         </div>
         {/* Subtasks input */}
         <div className="w-full mb-6">
-          <p className="mb-3 h5-bold text-light-600">Subtasks</p>
+          <p className="mb-3 body-bold text-light-600">Subtasks</p>
           <div className="w-full flex items-center gap-4">
             <input
               placeholder="e.g. Make coffee"
@@ -70,7 +70,7 @@ recharge the batteries a little."
           />
         </div>
         <DropdownMenu>
-          <p className="mb-3 h5-bold text-light-600">Status</p>
+          <p className="mb-3 body-bold text-light-600">Status</p>
           <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
             <p>Todo</p>
             <img src="/icons/icon-chevron-down.svg" alt="dropdown" />

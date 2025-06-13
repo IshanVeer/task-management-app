@@ -18,7 +18,7 @@ const BoardForm = ({ mode }: BoardFormProps) => {
       <form className="py-4" action="submit">
         <div className="flex flex-col gap-3 mb-6">
           {" "}
-          <label className="h5-bold text-light-600" htmlFor="name">
+          <label className="body-bold text-light-600" htmlFor="name">
             Name
           </label>
           <input
@@ -30,7 +30,7 @@ const BoardForm = ({ mode }: BoardFormProps) => {
         </div>
         {/* Columns */}
         <div className="w-full mb-2">
-          <p className="mb-3 h5-bold text-light-600">Columns</p>
+          <p className="mb-3 body-bold text-light-600">Columns</p>
           <div className="w-full flex items-center gap-4">
             <input
               placeholder="e.g. Make coffee"
