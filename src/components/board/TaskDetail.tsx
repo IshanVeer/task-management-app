@@ -26,10 +26,19 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
   return (
     <Card>
       <div className="flex items-center justify-between">
-        <h2 className="h2-bold text-dark100_light900">{selectedTask?.title}</h2>
+        <div className="w-[90%]">
+          <h2 className="h2-bold text-dark100_light900">
+            {selectedTask?.title}
+          </h2>
+        </div>
+
         <DropdownMenu>
           <DropdownMenuTrigger className="cursor-pointer">
-            <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
+            <img
+              className="w-full object-cover"
+              src="/icons/icon-vertical-ellipsis.svg"
+              alt="board-menu"
+            />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="paragraph-medium absolute w-[192px] px-2 py-3 top-0 right-0">
             <DropdownMenuItem
@@ -56,17 +65,19 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
       <form className="my-5" action="submit">
         {selectedTask?.subtasks.map((subtask) => (
           <div
-            className="flex items-center background-light800_darkCustom p-3 mb-3 rounded-xs h5-bold gap-2"
+            className="flex items-center background-light800_darkCustom p-3 mb-3 rounded-xs h5-bold gap-3"
             key={subtask.title}
           >
             <input
-              className="appearance-none rounded-xs border-1 w-4 h-4 bg-white checked:bg-primary-500 checked:text-transparent checked:border-primary-500 focus:outline-none focus:ring-0 checked:bg-no-repeat checked:bg-center
+              className="appearance-none  rounded-xs border-1 w-4 h-4 bg-white checked:bg-primary-500 checked:text-transparent checked:border-primary-500 focus:outline-none focus:ring-0 checked:bg-no-repeat checked:bg-center
                 checked:bg-contain"
               style={{ backgroundImage: checkedSvg }}
               id={subtask.title}
               type="checkbox"
             />
-            <label htmlFor={subtask.title}>{subtask.title}</label>
+            <label className="w-[90%]" htmlFor={subtask.title}>
+              {subtask.title}
+            </label>
           </div>
         ))}
         <div className="mt-6">
