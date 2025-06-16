@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { initialBoardData } from "@/constants";
 import type { BoardDataProps, BoardProps, TaskProps } from "@/types";
 
@@ -17,13 +17,34 @@ const BoardContext = createContext<BoardContextType | undefined>(undefined);
 
 const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   // useState to move data to state
-  const [boardData, setBoardData] = useState(initialBoardData);
+  const [boardData, setBoardData] = useState<BoardDataProps>({ boards: [] });
   const [activeBoard, setActiveBoard] = useState("1");
   const [selectedTask, setSelectedTask] = useState<TaskProps | undefined>();
+
+  // on initial load pass the initialBoardData to local storage.
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("boards");
+    if (storedData) {
+      setBoardData(JSON.parse(storedData));
+    } else {
+      localStorage.setItem("boards", JSON.stringify(initialBoardData));
+      setBoardData(initialBoardData);
+      console.log("board data stored");
+    }
+  }, []);
+
+  console.log(boardData, "board data");
 
   const selectedBoard = boardData.boards.find(
     (board) => board.id === activeBoard
   );
+
+  // get the data from local storage
+
+  // create new board
+
+  // create new task
 
   const value = {
     boardData,
