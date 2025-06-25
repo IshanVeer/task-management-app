@@ -11,6 +11,7 @@ interface BoardContextType {
   selectedTask: TaskProps | undefined;
   setSelectedTask: React.Dispatch<React.SetStateAction<TaskProps | undefined>>;
   createBoard: (boardName: string, columns: string[]) => void;
+  deleteBoard: (boardId: string) => void;
 }
 
 // create board context
@@ -24,8 +25,11 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   // on initial load pass the initialBoardData to local storage and get it.
 
+  console.log(boardData, "data stored in state");
+
   useEffect(() => {
     const storedData = localStorage.getItem("boards");
+    console.log(storedData, "stored data in local storage");
     if (storedData) {
       setBoardData(JSON.parse(storedData));
     } else {
@@ -58,6 +62,22 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     setBoardData(updatedBoardData);
   };
 
+  // delete board
+  const deleteBoard = (boardId: string) => {
+    const updatedBoard = boardData.boards.filter(
+      (board) => board.id !== boardId
+    );
+    const updatedBoardData = { boards: updatedBoard };
+
+    localStorage.setItem("boards", JSON.stringify(updatedBoardData));
+
+    setBoardData(updatedBoardData);
+
+    if (updatedBoardData.boards.length > 0) {
+      setActiveBoard(updatedBoardData.boards[0].id);
+    }
+  };
+
   // create new task
 
   const value = {
@@ -69,6 +89,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     selectedTask,
     setSelectedTask,
     createBoard,
+    deleteBoard,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

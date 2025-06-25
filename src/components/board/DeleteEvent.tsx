@@ -25,10 +25,11 @@ const DeleteEvent = ({ mode, closeModalHandler }: DeleteEventProps) => {
       )}
       <div className="flex w-full gap-4  items-center">
         <Button
-          action="delete-event"
+          action={mode === "task" ? "delete-task" : "delete-board"}
           classname="w-full"
           label="Delete"
           buttonStyle="destructive"
+          closeModalHandler={closeModalHandler}
         />
         <Button
           action="close-modal"

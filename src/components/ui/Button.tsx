@@ -1,3 +1,5 @@
+import { useBoardData } from "@/context/BoardProvider";
+
 interface ButtonProps {
   buttonStyle?: "primary" | "secondary" | "destructive";
   typeButton?: "button" | "submit" | "reset";
@@ -20,6 +22,7 @@ const Button = ({
   addColumnHandler,
   action,
 }: ButtonProps) => {
+  const { selectedBoard, deleteBoard } = useBoardData();
   const clickHandler = () => {
     switch (action) {
       case "open-modal":
@@ -28,6 +31,14 @@ const Button = ({
         return closeModalHandler?.();
       case "add-column":
         return addColumnHandler?.();
+      case "delete-board":
+        if (!selectedBoard?.id) {
+          return;
+        }
+
+        deleteBoard(selectedBoard?.id);
+        closeModalHandler?.();
+        return;
     }
   };
 
