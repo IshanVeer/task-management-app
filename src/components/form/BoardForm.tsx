@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import { useBoardData } from "@/context/BoardProvider";
@@ -11,10 +11,17 @@ interface BoardFormProps {
 const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
   // board name state
   const [boardName, setBoardName] = useState("");
-  const { createBoard } = useBoardData();
+  const { createBoard, selectedBoard, editBoard } = useBoardData();
 
   // Column state
   const [columns, setColumns] = useState<string[]>([""]);
+
+  useEffect(() => {
+    if (mode === "edit" && selectedBoard) {
+      setBoardName(selectedBoard?.name);
+      setColumns(selectedBoard?.columns.map((column) => column.name));
+    }
+  }, [mode, selectedBoard]);
 
   // handle name change
 
@@ -47,7 +54,12 @@ const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
     if (!boardName.trim()) {
       return;
     }
-    createBoard(boardName, columns);
+    if (mode === "edit" && selectedBoard) {
+      editBoard(selectedBoard.id, boardName, columns);
+    } else {
+      createBoard(boardName, columns);
+    }
+
     closeModalHandler();
   };
 
@@ -112,7 +124,7 @@ const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
           action="submit-board-form"
           typeButton="submit"
           classname="w-full mt-4"
-          label="Create New Board"
+          label={mode === "edit" ? "Edit Board" : "Create New Board"}
         />
       </form>
     </Card>
