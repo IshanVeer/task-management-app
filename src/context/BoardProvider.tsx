@@ -21,7 +21,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   const [activeBoard, setActiveBoard] = useState("1");
   const [selectedTask, setSelectedTask] = useState<TaskProps | undefined>();
 
-  // on initial load pass the initialBoardData to local storage.
+  // on initial load pass the initialBoardData to local storage and get it.
 
   useEffect(() => {
     const storedData = localStorage.getItem("boards");
@@ -29,18 +29,14 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
       setBoardData(JSON.parse(storedData));
     } else {
       localStorage.setItem("boards", JSON.stringify(initialBoardData));
+
       setBoardData(initialBoardData);
-      console.log("board data stored");
     }
   }, []);
-
-  console.log(boardData, "board data");
 
   const selectedBoard = boardData.boards.find(
     (board) => board.id === activeBoard
   );
-
-  // get the data from local storage
 
   // create new board
 

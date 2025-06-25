@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 
@@ -6,6 +7,29 @@ interface BoardFormProps {
 }
 
 const BoardForm = ({ mode }: BoardFormProps) => {
+  // board name state
+
+  // Column state
+  const [columns, setColumns] = useState<string[]>([""]);
+
+  // handle column change
+  const handleColumnChange = (index: number, value: string) => {
+    const updatedColumns = [...columns];
+    updatedColumns[index] = value;
+    setColumns(updatedColumns);
+  };
+
+  // add column
+  const addColumnHandler = () => {
+    setColumns([...columns, ""]);
+  };
+
+  // remove column
+  const removeColumnHandler = (index: number) => {
+    const updatedColumns = columns.filter((_, i) => i !== index);
+    setColumns(updatedColumns);
+  };
+
   return (
     <Card>
       {mode === "edit" ? (
@@ -31,22 +55,34 @@ const BoardForm = ({ mode }: BoardFormProps) => {
         {/* Columns */}
         <div className="w-full mb-2">
           <p className="mb-3 body-bold text-light-600">Columns</p>
-          <div className="w-full flex items-center gap-4">
-            <input
-              placeholder="e.g. Make coffee"
-              className="px-4 placeholder:text-[13px] w-full py-2 border rounded-[4px]"
-              id="subtask"
-              type="text"
-            />
-            <button>
-              <img src="/icons/icon-cross.svg" alt="delete-column" />
-            </button>
-          </div>
+          {columns.map((col, index) => (
+            <div
+              key={`column-${index}`}
+              className="w-full flex items-center gap-4 my-4"
+            >
+              <input
+                placeholder="e.g. Make coffee"
+                className="px-4 placeholder:text-[13px] w-full py-2 border rounded-[4px]"
+                id="subtask"
+                type="text"
+                value={col}
+                onChange={(e) => handleColumnChange(index, e.target.value)}
+              />
+              <button
+                className="cursor-pointer"
+                onClick={() => removeColumnHandler(index)}
+              >
+                <img src="/icons/icon-cross.svg" alt="delete-column" />
+              </button>
+            </div>
+          ))}
+
           <Button
             action="add-column"
             classname="w-full mt-4"
-            type="secondary"
+            buttonStyle="secondary"
             label="+ Add New Column"
+            addColumnHandler={addColumnHandler}
           />
         </div>
         <Button

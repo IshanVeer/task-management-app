@@ -1,18 +1,22 @@
 interface ButtonProps {
-  type?: string;
+  buttonStyle?: "primary" | "secondary" | "destructive";
+  typeButton?: "button" | "submit" | "reset";
   label: string;
   classname?: string;
   openModalHandler?: () => void;
   closeModalHandler?: () => void;
+  addColumnHandler?: () => void;
   action: string;
 }
 
 const Button = ({
-  type,
+  buttonStyle,
+  typeButton,
   label,
   classname,
   openModalHandler,
   closeModalHandler,
+  addColumnHandler,
   action,
 }: ButtonProps) => {
   const clickHandler = () => {
@@ -21,15 +25,18 @@ const Button = ({
         return openModalHandler?.();
       case "close-modal":
         return closeModalHandler?.();
+      case "add-column":
+        return addColumnHandler?.();
     }
   };
   return (
     <button
       onClick={clickHandler}
+      type={typeButton || "button"}
       className={`${classname} text-center inline-block transition duration-150 cursor-pointer px-6 py-3 text-white base-bold rounded-3xl outline-0 ${
-        type === "destructive"
+        buttonStyle === "destructive"
           ? "button-destructive"
-          : type === "secondary"
+          : buttonStyle === "secondary"
           ? "button-secondary"
           : "button-primary"
       }`}

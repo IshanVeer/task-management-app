@@ -44,7 +44,7 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
           </label>
           <textarea
             placeholder="e.g. It’s always good to take a break. This 15 minute break will 
-recharge the batteries a little."
+                          recharge the batteries a little."
             className="h-28 px-4 py-2 placeholder:text-[13px] border rounded-[4px]"
             id="description"
           />
@@ -59,14 +59,14 @@ recharge the batteries a little."
               id="subtask"
               type="text"
             />
-            <button>
+            <button className="cursor-pointer">
               <img src="/icons/icon-cross.svg" alt="delete-subtasks" />
             </button>
           </div>
           <Button
             action="add-subtask"
             classname="w-full mt-4"
-            type="secondary"
+            buttonStyle="secondary"
             label="+ Add New Subtask"
           />
         </div>

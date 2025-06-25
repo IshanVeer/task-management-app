@@ -28,14 +28,14 @@ const DeleteEvent = ({ mode, closeModalHandler }: DeleteEventProps) => {
           action="delete-event"
           classname="w-full"
           label="Delete"
-          type="destructive"
+          buttonStyle="destructive"
         />
         <Button
           action="close-modal"
           closeModalHandler={closeModalHandler}
           classname="w-full"
           label="Cancel"
-          type="secondary"
+          buttonStyle="secondary"
         />
       </div>
     </Card>
