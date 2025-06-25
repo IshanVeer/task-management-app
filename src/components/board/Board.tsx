@@ -44,7 +44,11 @@ const Board = ({
           <p className="text-light-600 h2-bold pb-4">
             This board is empty. Create a new column to get started.
           </p>
-          <Button label="+ Add New Column" />{" "}
+          <Button
+            openModalHandler={() => openModalHandler("edit-board")}
+            action="open-modal"
+            label="+ Add New Column"
+          />{" "}
         </div>
       )}
       {!showSidebar && (

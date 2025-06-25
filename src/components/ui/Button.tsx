@@ -6,6 +6,7 @@ interface ButtonProps {
   openModalHandler?: () => void;
   closeModalHandler?: () => void;
   addColumnHandler?: () => void;
+
   action: string;
 }
 
@@ -29,6 +30,7 @@ const Button = ({
         return addColumnHandler?.();
     }
   };
+
   return (
     <button
       onClick={clickHandler}

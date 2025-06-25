@@ -1,16 +1,27 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
+import { useBoardData } from "@/context/BoardProvider";
 
 interface BoardFormProps {
   mode?: string;
+  closeModalHandler: () => void;
 }
 
-const BoardForm = ({ mode }: BoardFormProps) => {
+const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
   // board name state
+  const [boardName, setBoardName] = useState("");
+  const { createBoard } = useBoardData();
 
   // Column state
   const [columns, setColumns] = useState<string[]>([""]);
+
+  // handle name change
+
+  const nameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setBoardName(e.target.value);
+  };
 
   // handle column change
   const handleColumnChange = (index: number, value: string) => {
@@ -29,6 +40,16 @@ const BoardForm = ({ mode }: BoardFormProps) => {
     const updatedColumns = columns.filter((_, i) => i !== index);
     setColumns(updatedColumns);
   };
+  // handle create board form submit
+
+  const submitBoardFormHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!boardName.trim()) {
+      return;
+    }
+    createBoard(boardName, columns);
+    closeModalHandler();
+  };
 
   return (
     <Card>
@@ -39,7 +60,7 @@ const BoardForm = ({ mode }: BoardFormProps) => {
       ) : (
         <h2 className="h2-bold">Add New Board</h2>
       )}
-      <form className="py-4" action="submit">
+      <form onSubmit={submitBoardFormHandler} className="py-4" action="submit">
         <div className="flex flex-col gap-3 mb-6">
           {" "}
           <label className="body-bold text-light-600" htmlFor="name">
@@ -50,6 +71,8 @@ const BoardForm = ({ mode }: BoardFormProps) => {
             placeholder="e.g. Web Design"
             id="name"
             type="text"
+            value={boardName ?? ""}
+            onChange={nameInputHandler}
           />
         </div>
         {/* Columns */}
@@ -86,7 +109,8 @@ const BoardForm = ({ mode }: BoardFormProps) => {
           />
         </div>
         <Button
-          action="submit-form"
+          action="submit-board-form"
+          typeButton="submit"
           classname="w-full mt-4"
           label="Create New Board"
         />

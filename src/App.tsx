@@ -53,9 +53,9 @@ function App() {
         ) : null;
 
       case "add-board":
-        return <BoardForm />;
+        return <BoardForm closeModalHandler={closeModalHandler} />;
       case "edit-board":
-        return <BoardForm mode="edit" />;
+        return <BoardForm closeModalHandler={closeModalHandler} mode="edit" />;
 
       case "delete-board":
         return <DeleteEvent closeModalHandler={closeModalHandler} />;
