@@ -26,11 +26,9 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   // on initial load pass the initialBoardData to local storage and get it.
 
-  console.log(boardData, "data stored in state");
-
   useEffect(() => {
     const storedData = localStorage.getItem("boards");
-    console.log(storedData, "stored data in local storage");
+
     if (storedData) {
       setBoardData(JSON.parse(storedData));
     } else {

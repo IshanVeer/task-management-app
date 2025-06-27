@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { BoardProps } from "@/types";
+import { useState } from "react";
 
 interface Props {
   selectedBoard: BoardProps;
@@ -14,6 +15,41 @@ interface Props {
 }
 
 const TaskForm = ({ selectedBoard, mode }: Props) => {
+  const [taskName, setTaskName] = useState("");
+  const [taskDescription, setTaskDescription] = useState("");
+  const [taskStatus, setTaskStatus] = useState("");
+  const [subtasks, setSubtasks] = useState<string[]>([""]);
+
+  // task name handler
+  const taskNameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    setTaskName(e.target.value);
+  };
+
+  // description handler
+  const taskDescriptionInputHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    console.log(e.target.value);
+    setTaskDescription(e.target.value);
+  };
+
+  // subtask handler
+  const subtaskChangeHandler = (index: number, value: string) => {
+    const updatedSubtasks = [...subtasks];
+    updatedSubtasks[index] = value;
+    setSubtasks(updatedSubtasks);
+  };
+
+  const addSubtaskInputHandler = () => {
+    setSubtasks([...subtasks, ""]);
+  };
+
+  const removeSubtaskHandler = (index: number) => {
+    const updatedSubtasks = subtasks.filter((_, i) => i !== index);
+    setSubtasks(updatedSubtasks);
+  };
+
   return (
     <Card>
       {mode === "edit" ? (
@@ -34,6 +70,8 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
             placeholder="e.g. Take coffee break"
             id="title"
             type="text"
+            onChange={taskNameInputHandler}
+            value={taskName}
           />
         </div>
         {/* description input */}
@@ -47,38 +85,57 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
                           recharge the batteries a little."
             className="h-28 px-4 py-2 placeholder:text-[13px] border rounded-[4px]"
             id="description"
+            onChange={taskDescriptionInputHandler}
+            value={taskDescription}
           />
         </div>
         {/* Subtasks input */}
         <div className="w-full mb-6">
           <p className="mb-3 body-bold text-light-600">Subtasks</p>
-          <div className="w-full flex items-center gap-4">
-            <input
-              placeholder="e.g. Make coffee"
-              className="px-4 placeholder:text-[13px] w-full py-2 border rounded-[4px]"
-              id="subtask"
-              type="text"
-            />
-            <button className="cursor-pointer">
-              <img src="/icons/icon-cross.svg" alt="delete-subtasks" />
-            </button>
-          </div>
+          {subtasks.map((subtask, index) => (
+            <div
+              key={`subtask-${index}`}
+              className="w-full flex my-4 items-center gap-4"
+            >
+              <input
+                placeholder="e.g. Make coffee"
+                value={subtask}
+                className="px-4 placeholder:text-[13px] w-full py-2 border rounded-[4px]"
+                id="subtask"
+                type="text"
+                onChange={(e) => subtaskChangeHandler(index, e.target.value)}
+              />
+              <button
+                onClick={() => removeSubtaskHandler(index)}
+                className="cursor-pointer"
+              >
+                <img src="/icons/icon-cross.svg" alt="delete-subtasks" />
+              </button>
+            </div>
+          ))}
+
           <Button
             action="add-subtask"
             classname="w-full mt-4"
             buttonStyle="secondary"
             label="+ Add New Subtask"
+            addSubtaskHandler={addSubtaskInputHandler}
           />
         </div>
         <DropdownMenu>
           <p className="mb-3 body-bold text-light-600">Status</p>
           <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
-            <p>Todo</p>
+            <p>{taskStatus || "Select Status"}</p>
             <img src="/icons/icon-chevron-down.svg" alt="dropdown" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[440px]">
             {selectedBoard.columns.map((column) => (
-              <DropdownMenuItem key={column.name}>
+              <DropdownMenuItem
+                onSelect={() => {
+                  setTaskStatus(column.name);
+                }}
+                key={column.name}
+              >
                 {column.name}
               </DropdownMenuItem>
             ))}

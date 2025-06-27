@@ -8,6 +8,7 @@ interface ButtonProps {
   openModalHandler?: () => void;
   closeModalHandler?: () => void;
   addColumnHandler?: () => void;
+  addSubtaskHandler?: () => void;
 
   action: string;
 }
@@ -20,6 +21,7 @@ const Button = ({
   openModalHandler,
   closeModalHandler,
   addColumnHandler,
+  addSubtaskHandler,
   action,
 }: ButtonProps) => {
   const { selectedBoard, deleteBoard } = useBoardData();
@@ -31,6 +33,8 @@ const Button = ({
         return closeModalHandler?.();
       case "add-column":
         return addColumnHandler?.();
+      case "add-subtask":
+        return addSubtaskHandler?.();
       case "delete-board":
         if (!selectedBoard?.id) {
           return;

@@ -9,9 +9,9 @@ interface BoardFormProps {
 }
 
 const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
+  const { createBoard, selectedBoard, editBoard } = useBoardData();
   // board name state
   const [boardName, setBoardName] = useState("");
-  const { createBoard, selectedBoard, editBoard } = useBoardData();
 
   // Column state
   const [columns, setColumns] = useState<string[]>([""]);
@@ -26,7 +26,6 @@ const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
   // handle name change
 
   const nameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setBoardName(e.target.value);
   };
 
