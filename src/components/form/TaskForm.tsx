@@ -8,21 +8,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import type { BoardProps } from "@/types";
 import { useState } from "react";
+import { useBoardData } from "@/context/BoardProvider";
 
 interface Props {
   selectedBoard: BoardProps;
   mode?: string;
+  closeModalHandler: () => void;
 }
 
-const TaskForm = ({ selectedBoard, mode }: Props) => {
+const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
   const [subtasks, setSubtasks] = useState<string[]>([""]);
+  const { createTask } = useBoardData();
 
   // task name handler
   const taskNameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setTaskName(e.target.value);
   };
 
@@ -50,6 +52,15 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
     setSubtasks(updatedSubtasks);
   };
 
+  const submitTaskFormHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!taskName) {
+      return;
+    }
+    createTask(taskName, subtasks, taskDescription, taskStatus);
+    closeModalHandler();
+  };
+
   return (
     <Card>
       {mode === "edit" ? (
@@ -58,7 +69,7 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
         <h2 className="h2-bold">Add New Task</h2>
       )}
 
-      <form className="py-4" action="submit">
+      <form onSubmit={submitTaskFormHandler} className="py-4" action="submit">
         {/* title input */}
         <div className="flex flex-col gap-3 mb-6">
           {" "}
@@ -142,9 +153,10 @@ const TaskForm = ({ selectedBoard, mode }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
         <Button
-          action="submit-form"
+          action="submit-task-Form"
           classname="w-full mt-4"
           label="Create Task"
+          typeButton="submit"
         />
       </form>
     </Card>

@@ -13,6 +13,12 @@ interface BoardContextType {
   createBoard: (boardName: string, columns: string[]) => void;
   deleteBoard: (boardId: string) => void;
   editBoard: (boardId: string, newName: string, newColumns: string[]) => void;
+  createTask: (
+    taskTitle: string,
+    subtasks: string[],
+    taskDescription: string,
+    status: string
+  ) => void;
 }
 
 // create board context
@@ -102,6 +108,50 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
 
   // create new task
 
+  const createTask = (
+    taskTitle: string,
+    subtasks: string[],
+    taskDescription: string,
+    status: string
+  ) => {
+    const newTask = {
+      id: Date.now().toString(),
+      title: taskTitle,
+      description: taskDescription,
+      subtasks: subtasks.map((subtask) => ({
+        title: subtask,
+        isCompleted: false,
+      })),
+      status: status,
+    };
+
+    const updatedBoard = boardData.boards.map((board) => {
+      // check board is equal to active board and update the board
+
+      if (board.id === activeBoard) {
+        const updatedColumns = board.columns.map((column) => {
+          if (column.name === status) {
+            return {
+              ...column,
+              tasks: [...column.tasks, newTask],
+            };
+          }
+          return column;
+        });
+        return {
+          ...board,
+          columns: updatedColumns,
+        };
+      }
+
+      return board;
+    });
+
+    const updatedBoardData = { boards: updatedBoard };
+    localStorage.setItem("boards", JSON.stringify(updatedBoardData));
+    setBoardData(updatedBoardData);
+  };
+
   const value = {
     boardData,
     setBoardData,
@@ -113,6 +163,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     createBoard,
     deleteBoard,
     editBoard,
+    createTask,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

@@ -44,12 +44,19 @@ function App() {
     switch (openModal) {
       case "add-task":
         return selectedBoard ? (
-          <TaskForm selectedBoard={selectedBoard} />
+          <TaskForm
+            closeModalHandler={closeModalHandler}
+            selectedBoard={selectedBoard}
+          />
         ) : null;
 
       case "edit-task":
         return selectedBoard ? (
-          <TaskForm selectedBoard={selectedBoard} mode="edit" />
+          <TaskForm
+            closeModalHandler={closeModalHandler}
+            selectedBoard={selectedBoard}
+            mode="edit"
+          />
         ) : null;
 
       case "add-board":
