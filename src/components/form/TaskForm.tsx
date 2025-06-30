@@ -6,14 +6,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { BoardProps } from "@/types";
-import { useState } from "react";
+import type { BoardProps, TaskProps } from "@/types";
+import { useEffect, useState } from "react";
 import { useBoardData } from "@/context/BoardProvider";
 
 interface Props {
   selectedBoard: BoardProps;
   mode?: string;
   closeModalHandler: () => void;
+  selectedTask: TaskProps | undefined;
 }
 
 const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
@@ -21,7 +22,16 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
   const [subtasks, setSubtasks] = useState<string[]>([""]);
-  const { createTask } = useBoardData();
+  const { createTask, editTask, selectedTask } = useBoardData();
+
+  useEffect(() => {
+    if (mode === "edit" && selectedTask) {
+      setTaskName(selectedTask.title);
+      setTaskDescription(selectedTask.description);
+      setSubtasks(selectedTask.subtasks.map((subtask) => subtask.title));
+      setTaskStatus(selectedTask.status);
+    }
+  }, [mode, selectedTask]);
 
   // task name handler
   const taskNameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +67,18 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
     if (!taskName) {
       return;
     }
-    createTask(taskName, subtasks, taskDescription, taskStatus);
+    if (mode === "edit" && selectedTask) {
+      editTask(
+        selectedTask.id,
+        taskName,
+        subtasks,
+        taskDescription,
+        taskStatus
+      );
+    } else {
+      createTask(taskName, subtasks, taskDescription, taskStatus);
+    }
+
     closeModalHandler();
   };
 
@@ -155,7 +176,7 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
         <Button
           action="submit-task-Form"
           classname="w-full mt-4"
-          label="Create Task"
+          label={mode === "edit" ? "Edit Task" : "Create Task"}
           typeButton="submit"
         />
       </form>

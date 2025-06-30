@@ -19,6 +19,13 @@ interface BoardContextType {
     taskDescription: string,
     status: string
   ) => void;
+  editTask: (
+    taskId: string,
+    newTaskTitle: string,
+    newSubtasks: string[],
+    newTaskDescription: string,
+    newStatus: string
+  ) => void;
 }
 
 // create board context
@@ -152,6 +159,87 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     setBoardData(updatedBoardData);
   };
 
+  // Edit Task
+  const editTask = (
+    taskId: string,
+    newTaskTitle: string,
+    newSubtasks: string[],
+    newTaskDescription: string,
+    newStatus: string
+  ) => {
+    let taskToMove: TaskProps | null = null;
+    // get the board from board id
+    const updatedBoard = boardData.boards.map((board) => {
+      if (board.id !== activeBoard) {
+        return board;
+      }
+      // get the column
+      const updatedColumns = board.columns.map((column) => {
+        // find task that needs to be updated
+        // to find task to edit we first need to find the task index
+        const taskIndex = column.tasks.findIndex((task) => task.id === taskId);
+
+        // if task index doesn't exist that measn task doesn't exist
+        if (taskIndex === -1) {
+          return column;
+        }
+        // check the task index from the columns to get the task to edit
+
+        const taskToEdit = column.tasks[taskIndex];
+
+        // create task object
+        const updatedTask = {
+          ...taskToEdit,
+          title: newTaskTitle,
+          description: newTaskDescription,
+          subtasks: newSubtasks.map((subtask) => ({
+            title: subtask,
+            isCompleted: false,
+          })),
+          status: newStatus,
+        };
+
+        // We have 2 scenarios now : 1. edited task is in same column as before 2. the column of task changes
+
+        // edited task is in same column as before then only the name for title / description / subtasks change
+        if (column.name === newStatus) {
+          const updatedTasks = [...column.tasks];
+          updatedTasks[taskIndex] = updatedTask;
+          return {
+            ...column,
+            tasks: updatedTasks,
+          };
+        } else {
+          taskToMove = updatedTask;
+          // we just remove the task from the column if it doesn't match the new status
+          return {
+            ...column,
+            tasks: column.tasks.filter((task) => task.id !== taskId),
+          };
+        }
+      });
+
+      if (taskToMove) {
+        const columnIndex = updatedColumns.findIndex(
+          (column) => column.name === newStatus
+        );
+
+        if (columnIndex !== -1) {
+          updatedColumns[columnIndex] = {
+            ...updatedColumns[columnIndex],
+            tasks: [...updatedColumns[columnIndex].tasks, taskToMove],
+          };
+        }
+      }
+
+      return { ...board, columns: updatedColumns };
+    });
+
+    const updatedBoardData = { boards: updatedBoard };
+    localStorage.setItem("boards", JSON.stringify(updatedBoardData));
+    setBoardData(updatedBoardData);
+  };
+
   const value = {
     boardData,
     setBoardData,
@@ -164,6 +252,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     deleteBoard,
     editBoard,
     createTask,
+    editTask,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

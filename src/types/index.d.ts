@@ -4,6 +4,7 @@ export interface SubTaskProps {
 }
 
 export interface TaskProps {
+  id: string;
   title: string;
   description: string;
   status: string;
