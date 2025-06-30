@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../ui/Card";
 import type { ModalType, TaskProps } from "@/types";
 import {
@@ -15,13 +15,47 @@ interface TaskDetailProps {
 }
 
 const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
-  const { selectedBoard, selectedTask } = useBoardData();
+  const { selectedBoard, selectedTask, editTask } = useBoardData();
+  const [subtasks, setSubtasks] = useState(selectedTask?.subtasks || []);
+  const [taskStatus, setTaskStatus] = useState(selectedTask?.status || "");
   const totalSubtasks = selectedTask?.subtasks.length;
   const completedSubtasks = selectedTask?.subtasks.filter(
     (subtask) => subtask.isCompleted
   ).length;
 
   const checkedSvg = `url('/icons/icon-check.svg')`;
+
+  useEffect(() => {
+    if (selectedTask) {
+      if (selectedTask?.subtasks) {
+        setSubtasks(selectedTask.subtasks);
+      }
+      if (selectedTask.status) {
+        setTaskStatus(selectedTask.status);
+      }
+    }
+  }, [selectedTask]);
+
+  const toggleSubtaskHandler = (index: number) => {
+    const updatedSubtask = [...subtasks];
+    updatedSubtask[index].isCompleted = !updatedSubtask[index].isCompleted;
+    setSubtasks(updatedSubtask);
+  };
+
+  const handleTaskStatusChange = (newStatus: string) => {
+    if (!selectedTask) {
+      return;
+    }
+    setTaskStatus(newStatus);
+
+    editTask(
+      selectedTask.id,
+      selectedTask.title,
+      selectedTask.subtasks.map((subtask) => subtask.title),
+      selectedTask.description,
+      newStatus
+    );
+  };
 
   return (
     <Card>
@@ -63,7 +97,7 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
       <p className="body-bold text-light-600">{`Subtasks(${completedSubtasks} of ${totalSubtasks}) `}</p>
 
       <form className="my-5" action="submit">
-        {selectedTask?.subtasks.map((subtask) => (
+        {selectedTask?.subtasks.map((subtask, index) => (
           <div
             className="flex items-center background-light800_darkCustom p-3 mb-3 rounded-xs body-bold gap-3"
             key={subtask.title}
@@ -73,6 +107,8 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
                 checked:bg-contain"
               style={{ backgroundImage: checkedSvg }}
               id={subtask.title}
+              checked={subtask.isCompleted}
+              onChange={() => toggleSubtaskHandler(index)}
               type="checkbox"
             />
             <label className="w-[90%]" htmlFor={subtask.title}>
@@ -84,12 +120,15 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
           <DropdownMenu>
             <p className="mb-3 body-bold text-light-600">Current Status</p>
             <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
-              <p>{selectedTask?.status}</p>
+              <p>{taskStatus}</p>
               <img src="/icons/icon-chevron-down.svg" alt="dropdown" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[440px]">
               {selectedBoard?.columns.map((column) => (
-                <DropdownMenuItem key={column.name}>
+                <DropdownMenuItem
+                  onSelect={() => handleTaskStatusChange(column.name)}
+                  key={column.name}
+                >
                   {column.name}
                 </DropdownMenuItem>
               ))}
