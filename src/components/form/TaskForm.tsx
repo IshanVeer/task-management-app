@@ -14,7 +14,7 @@ interface Props {
   selectedBoard: BoardProps;
   mode?: string;
   closeModalHandler: () => void;
-  selectedTask: TaskProps | undefined;
+  selectedTask?: TaskProps | undefined;
 }
 
 const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
