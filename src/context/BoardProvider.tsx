@@ -26,6 +26,7 @@ interface BoardContextType {
     newTaskDescription: string,
     newStatus: string
   ) => void;
+  deleteTask: (taskId: string) => void;
 }
 
 // create board context
@@ -240,6 +241,24 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     setBoardData(updatedBoardData);
   };
 
+  // delete task
+  const deleteTask = (taskId: string) => {
+    const updatedBoard = boardData.boards.map((board) => {
+      const updatedColumns = board.columns.map((column) => {
+        const filteredTask = column.tasks.filter((task) => task.id !== taskId);
+        return {
+          ...column,
+          tasks: filteredTask,
+        };
+      });
+      return { ...board, columns: updatedColumns };
+    });
+
+    const updatedBoardData = { boards: updatedBoard };
+    localStorage.setItem("boards", JSON.stringify(updatedBoardData));
+    setBoardData(updatedBoardData);
+  };
+
   const value = {
     boardData,
     setBoardData,
@@ -253,6 +272,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     editBoard,
     createTask,
     editTask,
+    deleteTask,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

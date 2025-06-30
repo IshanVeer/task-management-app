@@ -9,7 +9,6 @@ interface ButtonProps {
   closeModalHandler?: () => void;
   addColumnHandler?: () => void;
   addSubtaskHandler?: () => void;
-
   action: string;
 }
 
@@ -24,7 +23,8 @@ const Button = ({
   addSubtaskHandler,
   action,
 }: ButtonProps) => {
-  const { selectedBoard, deleteBoard } = useBoardData();
+  const { selectedBoard, deleteBoard, deleteTask, selectedTask } =
+    useBoardData();
   const clickHandler = () => {
     switch (action) {
       case "open-modal":
@@ -43,6 +43,12 @@ const Button = ({
         deleteBoard(selectedBoard?.id);
         closeModalHandler?.();
         return;
+      case "delete-task":
+        if (!selectedTask?.id) {
+          return;
+        }
+        deleteTask(selectedTask?.id);
+        closeModalHandler?.();
     }
   };
 
