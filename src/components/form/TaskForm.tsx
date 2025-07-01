@@ -22,6 +22,10 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState("");
   const [subtasks, setSubtasks] = useState<string[]>([""]);
+  const [taskNameInputError, setTaskNameInputError] = useState(false);
+  const [subtasksInputErrors, setSubtasksInputErrors] = useState<boolean[]>([]);
+  const [taskStatusError, setTaskStatusError] = useState(false);
+  const [hasTriedSubmitting, setHasTriedSubmitting] = useState(false);
   const { createTask, editTask, selectedTask } = useBoardData();
 
   useEffect(() => {
@@ -30,12 +34,16 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
       setTaskDescription(selectedTask.description);
       setSubtasks(selectedTask.subtasks.map((subtask) => subtask.title));
       setTaskStatus(selectedTask.status);
+      setSubtasksInputErrors(selectedTask.subtasks.map(() => false));
     }
   }, [mode, selectedTask]);
 
   // task name handler
   const taskNameInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskName(e.target.value);
+    if (taskNameInputError && e.target.value.trim() !== "") {
+      setTaskNameInputError(false);
+    }
   };
 
   // description handler
@@ -51,6 +59,12 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
     const updatedSubtasks = [...subtasks];
     updatedSubtasks[index] = value;
     setSubtasks(updatedSubtasks);
+
+    if (subtasksInputErrors[index] && value.trim() !== "") {
+      const updatedErrors = [...subtasksInputErrors];
+      updatedErrors[index] = false;
+      setSubtasksInputErrors(updatedErrors);
+    }
   };
 
   const addSubtaskInputHandler = () => {
@@ -64,7 +78,19 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
 
   const submitTaskFormHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!taskName) {
+    setHasTriedSubmitting(true);
+    if (!taskName.trim()) {
+      setTaskNameInputError(true);
+      return;
+    }
+    const subtaskErrors = subtasks.map((subtask) => subtask.trim() === "");
+
+    if (subtaskErrors.some((error) => error)) {
+      setSubtasksInputErrors(subtaskErrors);
+      return;
+    }
+    if (!taskStatus.trim()) {
+      setTaskStatusError(true);
       return;
     }
     if (mode === "edit" && selectedTask) {
@@ -98,8 +124,16 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
             Title
           </label>
           <input
-            className="px-4 py-2 placeholder:text-[13px] border rounded-[4px]"
-            placeholder="e.g. Take coffee break"
+            className={`px-4 py-2 placeholder:text-[13px] focus:outline-none border rounded-[4px] ${
+              taskNameInputError && hasTriedSubmitting
+                ? "placeholder:text-red-500 border-red-500"
+                : ""
+            }`}
+            placeholder={
+              taskNameInputError && hasTriedSubmitting
+                ? "Can't be empty"
+                : "e.g. Take coffee break"
+            }
             id="title"
             type="text"
             onChange={taskNameInputHandler}
@@ -130,9 +164,17 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
               className="w-full flex my-4 items-center gap-4"
             >
               <input
-                placeholder="e.g. Make coffee"
+                placeholder={
+                  subtasksInputErrors[index] && hasTriedSubmitting
+                    ? "Can't be empty"
+                    : "e.g. Make coffee"
+                }
                 value={subtask}
-                className="px-4 placeholder:text-[13px] w-full py-2 border rounded-[4px]"
+                className={`px-4 focus:outline-none placeholder:text-[13px] w-full py-2 border rounded-[4px] ${
+                  subtasksInputErrors[index] && hasTriedSubmitting
+                    ? "placeholder:text-red-500 border-red-500"
+                    : ""
+                }`}
                 id="subtask"
                 type="text"
                 onChange={(e) => subtaskChangeHandler(index, e.target.value)}
@@ -156,8 +198,18 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
         </div>
         <DropdownMenu>
           <p className="mb-3 body-bold text-light-600">Status</p>
-          <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
-            <p>{taskStatus || "Select Status"}</p>
+          <DropdownMenuTrigger
+            className={`${
+              taskStatusError && hasTriedSubmitting ? "border-red-500" : ""
+            } flex w-full px-4 py-2 border rounded-[4px] items-center justify-between`}
+          >
+            <p
+              className={
+                taskStatusError && hasTriedSubmitting ? "text-red-500" : ""
+              }
+            >
+              {taskStatus || "Select Status"}
+            </p>
             <img src="/icons/icon-chevron-down.svg" alt="dropdown" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[440px]">
@@ -165,6 +217,9 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
               <DropdownMenuItem
                 onSelect={() => {
                   setTaskStatus(column.name);
+                  if (taskStatusError && taskStatus.trim()) {
+                    setTaskStatusError(false);
+                  }
                 }}
                 key={column.name}
               >

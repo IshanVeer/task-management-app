@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import { useBoardData } from "@/context/BoardProvider";
-import Column from "../board/Column";
 
 interface BoardFormProps {
   mode?: string;
