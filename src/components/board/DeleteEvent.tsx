@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../ui/Card";
 import { useBoardData } from "@/context/BoardProvider";
 import Button from "../ui/Button";
