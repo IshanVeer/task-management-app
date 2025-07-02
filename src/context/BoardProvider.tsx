@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { initialBoardData } from "@/constants";
 import type { BoardDataProps, BoardProps, TaskProps } from "@/types";
+import type { DragEndEvent } from "@dnd-kit/core";
 
 interface BoardContextType {
   boardData: BoardDataProps;
@@ -27,6 +28,7 @@ interface BoardContextType {
     newStatus: string
   ) => void;
   deleteTask: (taskId: string) => void;
+  handleDraggableEnd: (event: DragEndEvent) => void;
 }
 
 // create board context
@@ -170,7 +172,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
   ) => {
     let taskToMove: TaskProps | null = null;
     // get the board from board id
-    const updatedBoard = boardData.boards.map((board) => {
+    const updatedBoards = boardData.boards.map((board) => {
       if (board.id !== activeBoard) {
         return board;
       }
@@ -232,11 +234,22 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
           };
         }
       }
+      if (taskToMove) {
+        setSelectedTask(taskToMove);
+      } else {
+        // fallback for same-column updates
+        const newSelected = updatedColumns
+          .flatMap((col) => col.tasks)
+          .find((t) => t.id === taskId);
+        if (newSelected) {
+          setSelectedTask(newSelected);
+        }
+      }
 
       return { ...board, columns: updatedColumns };
     });
 
-    const updatedBoardData = { boards: updatedBoard };
+    const updatedBoardData = { boards: updatedBoards };
     localStorage.setItem("boards", JSON.stringify(updatedBoardData));
     setBoardData(updatedBoardData);
   };
@@ -259,6 +272,72 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     setBoardData(updatedBoardData);
   };
 
+  // handle task draggable end
+
+  const handleDraggableEnd = (event: DragEndEvent) => {
+    const { over, active } = event;
+
+    if (!over?.id || over.id === active.id) {
+      return;
+    }
+
+    const activeTaskId = active.id;
+    const targetColumnId = over.id;
+
+    const updatedBoards = boardData.boards.map((board) => {
+      let movedTask: TaskProps | null = null;
+      const updatedColumns = board.columns.map((column) => {
+        // get task index
+
+        const taskIndex = column.tasks.findIndex(
+          (task) => task.id === activeTaskId
+        );
+
+        // if task doesn't exist in the column we stop the function
+
+        if (taskIndex === -1) {
+          return column;
+        }
+        // remove the task from the column before moving it to different column
+
+        const newTasks = [...column.tasks];
+        [movedTask] = newTasks.splice(taskIndex, 1);
+        return {
+          ...column,
+          tasks: newTasks,
+        };
+      });
+      if (movedTask) {
+        // we find the target column where the task needs to be moved
+        const columnIndex = updatedColumns.findIndex(
+          (column) => column.name === targetColumnId
+        );
+
+        if (columnIndex !== -1) {
+          updatedColumns[columnIndex] = {
+            ...updatedColumns[columnIndex],
+            tasks: [...updatedColumns[columnIndex].tasks, movedTask],
+          };
+        }
+      }
+      return {
+        ...board,
+        columns: updatedColumns,
+      };
+    });
+    const updatedBoardData = { boards: updatedBoards };
+    setBoardData(updatedBoardData);
+    localStorage.setItem("boards", JSON.stringify(updatedBoardData));
+
+    const updatedTask = updatedBoards
+      .flatMap((board) => board.columns.flatMap((col) => col.tasks))
+      .find((task) => task.id === activeTaskId);
+
+    if (updatedTask) {
+      setSelectedTask(updatedTask);
+    }
+  };
+
   const value = {
     boardData,
     setBoardData,
@@ -273,6 +352,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
     createTask,
     editTask,
     deleteTask,
+    handleDraggableEnd,
   };
   return (
     <BoardContext.Provider value={value}>{children}</BoardContext.Provider>

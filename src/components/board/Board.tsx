@@ -21,7 +21,7 @@ const Board = ({
   showSideBarHandler,
   openModalHandler,
 }: Props) => {
-  const { selectedBoard } = useBoardData();
+  const { selectedBoard, handleDraggableEnd } = useBoardData();
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -32,7 +32,7 @@ const Board = ({
   );
 
   return (
-    <DndContext sensors={sensors}>
+    <DndContext onDragEnd={handleDraggableEnd} sensors={sensors}>
       <div className="min-h-screen p-5 relative">
         {selectedBoard?.columns && selectedBoard?.columns?.length > 0 ? (
           <div className="flex items-start gap-5 w-max">
