@@ -82,7 +82,10 @@ const LeftSidebar = ({
                 onClick={() => hideSidebarHandler()}
                 className="flex w-full items-center gap-4 py-4 cursor-pointer  base-bold text-light-600"
               >
-                <img src="/icons/icon-hide-sidebar.svg" />
+                <img
+                  src="/icons/icon-hide-sidebar.svg"
+                  alt="hide-sidebar-icon"
+                />
                 <p>Hide Sidebar</p>
               </button>
             </div>
