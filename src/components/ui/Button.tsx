@@ -10,6 +10,7 @@ interface ButtonProps {
   addColumnHandler?: () => void;
   addSubtaskHandler?: () => void;
   action: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -22,6 +23,7 @@ const Button = ({
   addColumnHandler,
   addSubtaskHandler,
   action,
+  disabled,
 }: ButtonProps) => {
   const { selectedBoard, deleteBoard, deleteTask, selectedTask } =
     useBoardData();
@@ -55,8 +57,9 @@ const Button = ({
   return (
     <button
       onClick={clickHandler}
+      disabled={disabled}
       type={typeButton || "button"}
-      className={`${classname} text-center inline-block transition duration-150 cursor-pointer px-6 py-3 text-white base-bold rounded-3xl outline-0 ${
+      className={` ${classname} text-center inline-block transition duration-150 cursor-pointer px-6 py-3 text-white base-bold rounded-3xl outline-0 ${
         buttonStyle === "destructive"
           ? "button-destructive"
           : buttonStyle === "secondary"

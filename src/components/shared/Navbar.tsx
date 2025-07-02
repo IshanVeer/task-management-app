@@ -34,7 +34,11 @@ const Navbar = ({ openModalHandler }: NavbarProps) => {
         </h1>
         <div className="flex items-center gap-4 ">
           <Button
+            classname={
+              !selectedBoard?.columns.length ? " opacity-50" : "cursor-pointer"
+            }
             action="open-modal"
+            disabled={!selectedBoard?.columns.length}
             openModalHandler={() => openModalHandler("add-task")}
             label="+ Add New Task"
           />
