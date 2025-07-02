@@ -55,7 +55,7 @@ const LeftSidebar = ({
                 onClick={() => openModalHandler("add-board")}
                 className="flex items-center gap-4 cursor-pointer base-bold text-primary-500 py-4"
               >
-                <img src="/icons/icon-add-board.svg" />{" "}
+                <img src="/icons/icon-add-board.svg" alt="add-board-icon" />{" "}
                 <p>+ Create New Board</p>
               </button>
             </div>

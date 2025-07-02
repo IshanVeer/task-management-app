@@ -70,7 +70,7 @@ const MobileNavbar = ({ openModalHandler }: mobileNavProps) => {
                   onClick={() => openModalHandler("add-board")}
                   className="flex  items-center gap-4 cursor-pointer base-bold text-primary-500 py-4"
                 >
-                  <img src="/icons/icon-add-board.svg" />{" "}
+                  <img src="/icons/icon-add-board.svg" alt="add-board-icon" />{" "}
                   <p>+ Create New Board</p>
                 </button>
                 <div className="flex justify-center gap-6 items-center py-4 mb-4  rounded-sm background-light800_darkCustom w-full">
