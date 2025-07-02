@@ -1,6 +1,6 @@
 import { randomHexColor } from "@/lib/utils";
 import type { ColumnProps, ModalType, TaskProps } from "@/types";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import TaskCard from "./TaskCard";
 import { useDroppable } from "@dnd-kit/core";
 

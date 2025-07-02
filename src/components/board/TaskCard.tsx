@@ -2,8 +2,6 @@ import type { ModalType, TaskProps } from "@/types";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
-import React from "react";
-
 interface Props {
   task: TaskProps;
   openModalHandler: (modalType: ModalType, task?: TaskProps) => void;
