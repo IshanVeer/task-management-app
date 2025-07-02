@@ -31,7 +31,7 @@ const MobileNavbar = ({ openModalHandler }: mobileNavProps) => {
         <DropdownMenu>
           <DropdownMenuTrigger className="h2-bold pl-4 flex items-center gap-2 outline-none focus:bg-transparent">
             {selectedBoard?.name}
-            <img src="/public/icons/icon-chevron-down.svg" alt="menu" />
+            <img src="/icons/icon-chevron-down.svg" alt="menu" />
           </DropdownMenuTrigger>
           <DropdownMenuContent className="px-6 -left-20  absolute top-6 background-light900_dark300">
             <p className="uppercase h5-bold  py-4 text-light-600">
