@@ -9,8 +9,19 @@ import {
 import { useBoardData } from "@/context/BoardProvider";
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "@/context/ThemeProvider";
+import type { ModalType } from "@/types";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
-const MobileNavbar = () => {
+interface mobileNavProps {
+  openModalHandler: (modalType: ModalType) => void;
+}
+
+const MobileNavbar = ({ openModalHandler }: mobileNavProps) => {
   const { mode, themeToggleHandler } = useTheme();
   const { activeBoard, selectedBoard, boardData, setActiveBoard } =
     useBoardData();
@@ -85,12 +96,35 @@ const MobileNavbar = () => {
 
       {/* button container */}
       <div className="flex items-center gap-4 ">
-        <button className=" rounded-3xl outline-0 px-6 py-3 button-primary">
+        <button
+          onClick={() => openModalHandler("add-task")}
+          disabled={!selectedBoard?.columns.length}
+          className={`${
+            !selectedBoard?.columns.length ? " opacity-50" : "cursor-pointer"
+          } rounded-3xl outline-0 px-6 py-3 button-primary`}
+        >
           <img src="/icons/icon-add-task-mobile.svg" alt="add-task-mobile" />
         </button>
-        <button className="cursor-pointer">
-          <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
-        </button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger className="cursor-pointer">
+            <img src="/icons/icon-vertical-ellipsis.svg" alt="board-menu" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="paragraph-medium absolute w-[192px] px-2 py-3 top-0 right-0">
+            <DropdownMenuItem
+              onClick={() => openModalHandler("edit-board")}
+              className="text-light-600 py-2 cursor-pointer"
+            >
+              Edit Board
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => openModalHandler("delete-board")}
+              className="text-red-500 py-2 cursor-pointer"
+            >
+              Delete Board
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

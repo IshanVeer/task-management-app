@@ -85,7 +85,7 @@ function App() {
         </Modal>
       )}
       <Navbar openModalHandler={openModalHandler} />
-      <MobileNavbar />
+      <MobileNavbar openModalHandler={openModalHandler} />
 
       <div className="flex">
         <LeftSidebar
