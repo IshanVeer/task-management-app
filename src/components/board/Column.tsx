@@ -2,6 +2,7 @@ import { randomHexColor } from "@/lib/utils";
 import type { ColumnProps, ModalType, TaskProps } from "@/types";
 import React, { useMemo } from "react";
 import TaskCard from "./TaskCard";
+import { useDroppable } from "@dnd-kit/core";
 
 interface Props {
   column: ColumnProps;
@@ -10,10 +11,14 @@ interface Props {
 
 const Column = ({ column, openModalHandler }: Props) => {
   const bgColor = useMemo(() => randomHexColor(), []);
+
+  const { setNodeRef } = useDroppable({
+    id: column.name,
+  });
   return (
     <>
       {/* column title */}
-      <div className="flex flex-col w-[280px]">
+      <div ref={setNodeRef} className="flex flex-col w-[280px]">
         <div className="flex text-light-600 body-bold mb-6 items-center gap-2">
           <div
             style={{ backgroundColor: bgColor }}
