@@ -32,7 +32,6 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
       }
     }
   }, [selectedTask]);
-  console.log(selectedTask?.status, "selected task status");
 
   const toggleSubtaskHandler = (index: number) => {
     const updatedSubtask = [...subtasks];

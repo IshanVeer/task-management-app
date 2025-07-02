@@ -50,7 +50,6 @@ const TaskForm = ({ selectedBoard, mode, closeModalHandler }: Props) => {
   const taskDescriptionInputHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    console.log(e.target.value);
     setTaskDescription(e.target.value);
   };
 
