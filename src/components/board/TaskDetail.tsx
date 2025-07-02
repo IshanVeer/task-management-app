@@ -17,7 +17,7 @@ interface TaskDetailProps {
 const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
   const { selectedBoard, selectedTask, editTask } = useBoardData();
   const [subtasks, setSubtasks] = useState(selectedTask?.subtasks || []);
-  const [taskStatus, setTaskStatus] = useState(selectedTask?.status || "");
+  // const [taskStatus, setTaskStatus] = useState(selectedTask?.status || "");
   const totalSubtasks = selectedTask?.subtasks.length;
   const completedSubtasks = selectedTask?.subtasks.filter(
     (subtask) => subtask.isCompleted
@@ -30,11 +30,9 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
       if (selectedTask?.subtasks) {
         setSubtasks(selectedTask.subtasks);
       }
-      if (selectedTask.status) {
-        setTaskStatus(selectedTask.status);
-      }
     }
   }, [selectedTask]);
+  console.log(selectedTask?.status, "selected task status");
 
   const toggleSubtaskHandler = (index: number) => {
     const updatedSubtask = [...subtasks];
@@ -46,7 +44,7 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
     if (!selectedTask) {
       return;
     }
-    setTaskStatus(newStatus);
+    // setTaskStatus(newStatus);
 
     editTask(
       selectedTask.id,
@@ -120,7 +118,7 @@ const TaskDetail = ({ openModalHandler }: TaskDetailProps) => {
           <DropdownMenu>
             <p className="mb-3 body-bold text-light-600">Current Status</p>
             <DropdownMenuTrigger className="flex w-full px-4 py-2 border rounded-[4px] items-center justify-between">
-              <p>{taskStatus}</p>
+              <p>{selectedTask?.status}</p>
               <img src="/icons/icon-chevron-down.svg" alt="dropdown" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[440px]">

@@ -307,16 +307,20 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
           tasks: newTasks,
         };
       });
-      if (movedTask) {
+      if (movedTask != null) {
         // we find the target column where the task needs to be moved
         const columnIndex = updatedColumns.findIndex(
           (column) => column.name === targetColumnId
         );
 
         if (columnIndex !== -1) {
+          const updatedMovedTask: TaskProps = {
+            ...(movedTask as TaskProps),
+            status: targetColumnId as string,
+          };
           updatedColumns[columnIndex] = {
             ...updatedColumns[columnIndex],
-            tasks: [...updatedColumns[columnIndex].tasks, movedTask],
+            tasks: [...updatedColumns[columnIndex].tasks, updatedMovedTask],
           };
         }
       }
