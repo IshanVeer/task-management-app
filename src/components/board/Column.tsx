@@ -23,15 +23,14 @@ const Column = ({ column, openModalHandler }: Props) => {
           <p>({column.tasks.length})</p>
         </div>
         {/* task card */}
-        <div>
-          {column.tasks.map((task) => (
-            <TaskCard
-              openModalHandler={openModalHandler}
-              key={task.title}
-              task={task}
-            />
-          ))}
-        </div>
+
+        {column.tasks.map((task) => (
+          <TaskCard
+            openModalHandler={openModalHandler}
+            key={task.title}
+            task={task}
+          />
+        ))}
       </div>
     </>
   );

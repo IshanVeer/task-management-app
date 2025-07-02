@@ -2,7 +2,12 @@ import { useBoardData } from "@/context/BoardProvider";
 import React from "react";
 import Column from "./Column";
 import Button from "../ui/Button";
-import { DndContext } from "@dnd-kit/core";
+import {
+  DndContext,
+  useSensors,
+  useSensor,
+  PointerSensor,
+} from "@dnd-kit/core";
 import type { ModalType, TaskProps } from "@/types";
 
 interface Props {
@@ -18,8 +23,16 @@ const Board = ({
 }: Props) => {
   const { selectedBoard } = useBoardData();
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
+
   return (
-    <DndContext>
+    <DndContext sensors={sensors}>
       <div className="min-h-screen p-5 relative">
         {selectedBoard?.columns && selectedBoard?.columns?.length > 0 ? (
           <div className="flex items-start gap-5 w-max">
