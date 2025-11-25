@@ -300,7 +300,7 @@ const BoardProvider = ({ children }: { children: React.ReactNode }) => {
         }
         // remove the task from the column before moving it to different column
 
-        const newTasks = [...column.tasks];
+        const newTasks = [...column.tasks]; // created copy of tasks
         [movedTask] = newTasks.splice(taskIndex, 1);
         return {
           ...column,

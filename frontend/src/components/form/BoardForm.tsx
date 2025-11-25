@@ -40,8 +40,8 @@ const BoardForm = ({ mode, closeModalHandler }: BoardFormProps) => {
 
   // handle column change
   const handleColumnChange = (index: number, value: string) => {
-    const updatedColumns = [...columns];
-    updatedColumns[index] = value;
+    const updatedColumns = [...columns]; // create a copy of all the cloumns
+    updatedColumns[index] = value; // update the columns with new values
     setColumns(updatedColumns);
 
     if (boardColumnInputErrors[index] && value.trim() !== "") {
